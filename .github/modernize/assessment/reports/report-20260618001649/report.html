@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Assessment - litemall</title>
+<style>
+:root {
+  --bg-primary: #ffffff;
+  --bg-card: #f8f9fa;
+  --bg-page: #f0f1f3;
+  --text-primary: #24292f;
+  --text-secondary: #57606a;
+  --text-muted: #6b7280;
+  --border-color: #d0d7de;
+  --border-light: #e1e4e8;
+  --link-color: #2563eb;
+  --color-mandatory: #E3008C;
+  --color-potential: #637CEF;
+  --color-optional: #A19F9D;
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-family); font-size: 13px; color: var(--text-primary); background: var(--bg-primary); line-height: 1.5; margin: 0; padding: 0; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Page layout ───────────────────────────────────────────── */
+.main { margin: 0; padding: 24px 32px; background: var(--bg-primary); }
+.back-link { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; display: block; }
+h1 { font-weight: 600; font-size: 20px; color: var(--text-primary); margin-bottom: 20px; }
+
+/* ── Report cards (matches VS Code .vscode-report-card) ──── */
+.report-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 4px; padding: 12px; margin-bottom: 20px; }
+.report-card h2 { font-size: 14px; font-weight: 600; margin: 0; color: var(--text-primary); }
+.report-card-body { margin-top: 16px; }
+
+/* ── Component Information (two-column) ────────────────── */
+.app-info-container { display: flex; gap: 8px; flex-wrap: wrap; }
+.app-info-column { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 8px; }
+.app-info-row { display: flex; align-items: baseline; }
+.app-info-label { width: 136px; flex-shrink: 0; font-weight: 600; color: var(--text-primary); }
+.app-info-value { flex: 1; color: var(--text-primary); }
+
+/* ── Issue Summary (pie charts + legend) ─────────────────── */
+.cards-container { display: flex; align-items: stretch; gap: 20px; flex-wrap: wrap; }
+.issue-summary-card { flex: 2; }
+.domain-summary-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; }
+.domain-summary-item { flex: 1; min-width: 120px; text-align: center; padding: 0 16px; border-right: 1px solid var(--border-light); }
+.domain-summary-item:last-child { border-right: none; }
+.domain-summary-item h3 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-top: 8px; }
+.domain-summary-item .count { font-size: 12px; color: var(--text-secondary); }
+.criticality-legend { display: flex; flex-wrap: wrap; gap: 15px; padding-top: 12px; justify-content: center; }
+.criticality-legend .legend-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-secondary); }
+.legend-swatch { display: inline-block; width: 1em; height: 1em; border-radius: 2px; }
+
+/* ── Issue list tables ───────────────────────────────────── */
+.issue-section { margin-top: 20px; }
+.issue-section h2 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.issue-table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 600px; }
+.issue-table th { text-align: left; text-transform: uppercase; font-weight: 600; font-size: calc(13px * 0.875); padding: 6px 8px; background: var(--bg-card); border-bottom: 1px solid var(--border-color); color: var(--text-secondary); position: sticky; top: 0; z-index: 1; }
+.issue-table td { padding: 12px 8px; border-bottom: 1px solid var(--border-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.col-issue { width: 55%; }
+.col-criticality { width: 25%; }
+.col-storypoint { width: 20%; }
+
+/* ── Target dropdown ─────────────────────────────────────── */
+.target-select-container { margin: 4px 0 16px 0; display: flex; align-items: center; gap: 8px; }
+.target-select-container label { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+.target-select-container select { font-family: var(--font-family); font-size: 13px; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); cursor: pointer; }
+
+/* ── Filter bar ──────────────────────────────────────────── */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 0 8px 0; align-items: center; }
+.multi-select { position: relative; display: inline-block; min-width: 140px; }
+.multi-select-btn { font-family: var(--font-family); font-size: 13px; padding: 4px 24px 4px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); cursor: pointer; width: 100%; text-align: left; position: relative; white-space: nowrap; }
+.multi-select-btn::after { content: '\25BE'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text-secondary); }
+.multi-select-dropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 100%; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; margin-top: 2px; }
+.multi-select.open .multi-select-dropdown { display: block; }
+.multi-select-option { display: flex; align-items: center; gap: 6px; padding: 5px 10px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+.multi-select-option:hover { background: var(--bg-secondary); }
+.multi-select-option input[type=checkbox] { margin: 0; cursor: pointer; }
+.clear-filters { font-size: 12px; color: var(--link-color); cursor: pointer; margin-left: 4px; }
+
+/* ── Criticality labels (colored square + text) ──────────── */
+.crit-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.crit-square { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.crit-square-mandatory { background: var(--color-mandatory); }
+.crit-square-potential { background: var(--color-potential); }
+.crit-square-optional { background: var(--color-optional); }
+
+/* ── Expandable rows ─────────────────────────────────────── */
+.expand-btn { background: none; border: none; cursor: pointer; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; transition: transform 0.15s; padding: 0; vertical-align: middle; flex-shrink: 0; }
+.expand-btn.open { transform: rotate(90deg); }
+.issue-title-cell { display: flex; align-items: center; gap: 4px; }
+.detail-row td { padding: 0; border-bottom: 1px solid var(--border-light); white-space: normal; overflow: visible; text-overflow: clip; }
+.detail-content { display: flex; gap: 0; padding: 8px 8px 8px 32px; min-width: 0; }
+.file-list { flex: 0 0 50%; min-width: 0; overflow: hidden; }
+.file-list table { width: 100%; border-collapse: collapse; }
+.file-list th { font-size: calc(13px * 0.875); text-transform: uppercase; font-weight: 600; color: var(--text-secondary); padding: 6px 8px; border-bottom: 1px solid var(--border-color); text-align: left; height: 32px; }
+.file-list td { font-size: 13px; padding: 6px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-primary); }
+.file-list .file-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px; display: block; }
+.file-list .position { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+.explanation-panel { flex: 1; padding-left: 16px; min-width: 0; overflow-wrap: break-word; word-wrap: break-word; }
+.explanation-panel h4 { font-size: calc(13px * 0.875); text-transform: uppercase; font-weight: 600; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--border-color); height: 32px; margin: 0; }
+.explanation-panel p { font-size: 13px; padding: 8px 0; color: var(--text-primary); line-height: 1.6; white-space: normal; word-break: break-word; }
+
+/* ── Experimental badge ──────────────────────────────────── */
+.badge-experimental { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #fef9c3; color: #854d0e; vertical-align: middle; margin-left: 8px; cursor: default; }
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer { text-align: center; margin-top: 24px; color: var(--text-muted); font-size: 13px; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .main { padding: 16px; }
+  .app-info-container { flex-direction: column; }
+  .domain-summary-container { flex-direction: column; }
+  .domain-summary-item { border-right: none; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; }
+  .detail-content { flex-direction: column; }
+  .file-list { flex: none; width: 100%; }
+  .explanation-panel { padding-left: 0; padding-top: 8px; }
+}
+/* ── Tab navigation ──────────────────────────────────────── */
+.tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); margin-bottom: 28px; flex-wrap: wrap; }
+.tab-btn { background: none; border: none; border-bottom: 2px solid transparent; padding: 10px 18px; font-size: 13px; font-family: var(--font-family); color: var(--text-secondary); cursor: pointer; margin-bottom: -1px; white-space: nowrap; position: relative; }
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--link-color); border-bottom-color: var(--link-color); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Tooltip on tab ──────────────────────────────────────── */
+.tab-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #24292f; color: #ffffff; font-size: 12px; font-weight: 400; padding: 6px 10px; border-radius: 4px; white-space: normal; width: max-content; max-width: 260px; text-align: center; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 100; }
+.tab-btn[data-tooltip]:hover::after { opacity: 1; }
+
+/* ── Fact content — prose column ─────────────────────────── */
+.fact-content { max-width: 860px; margin: 0 auto; line-height: 1.75; color: var(--text-primary); font-size: 14px; }
+.fact-content h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-primary); letter-spacing: -0.01em; }
+.fact-content h1 + p { margin-top: 6px; color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+.fact-content h2 { font-size: 17px; font-weight: 700; margin: 36px 0 12px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); letter-spacing: -0.01em; }
+.fact-content h3 { font-size: 14px; font-weight: 700; margin: 24px 0 8px 0; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; color: var(--text-secondary); }
+.fact-content p { margin: 10px 0; color: var(--text-primary); }
+.fact-content ul, .fact-content ol { margin: 10px 0 10px 22px; }
+.fact-content li { margin: 5px 0; }
+.fact-content a { color: var(--link-color); }
+.fact-content a:hover { text-decoration: underline; }
+
+/* ── Fact tables ─────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+.fact-content table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 13px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); }
+.fact-content thead { background: var(--bg-card); }
+.fact-content th { text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 14px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+.fact-content td { padding: 9px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; color: var(--text-primary); }
+.fact-content tr:last-child td { border-bottom: none; }
+.fact-content tbody tr:hover { background: #f6f8fa; }
+
+/* ── Fact code ───────────────────────────────────────────── */
+.fact-content code { font-family: var(--font-mono); font-size: 12px; background: #f0f1f3; padding: 2px 6px; border-radius: 4px; color: #c7254e; }
+.fact-content pre { background: #f6f8fa; border: 1px solid var(--border-light); border-radius: 6px; padding: 14px 16px; overflow-x: auto; margin: 14px 0; }
+.fact-content pre code { background: none; color: var(--text-primary); padding: 0; border-radius: 0; }
+.fact-content hr { border: none; border-top: 1px solid var(--border-light); margin: 28px 0; }
+.fact-content strong { font-weight: 600; }
+.fact-content em { font-style: italic; }
+.fact-content blockquote { border-left: 3px solid var(--border-color); margin: 12px 0; padding: 4px 16px; color: var(--text-secondary); }
+.fact-unavailable { padding: 32px 0; }
+.fact-unavailable h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); text-transform: none; letter-spacing: 0; margin: 0 0 12px 0; }
+.fact-unavailable p { margin: 0 0 8px 0; color: var(--text-secondary); }
+.fact-unavailable ol, .fact-unavailable ul { margin: 0 0 0 22px; color: var(--text-primary); }
+.fact-unavailable li { margin: 6px 0; }
+
+/* ── Mermaid diagram card ─────────────────────────────────── */
+.mermaid { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; padding: 24px 16px; margin: 20px 0; overflow-x: auto; text-align: center; cursor: pointer; position: relative; }
+.mermaid:hover { border-color: var(--border-color); }
+.mermaid svg { max-width: 100%; height: auto !important; display: inline-block; }
+.mermaid-zoom-hint { position: absolute; top: 8px; right: 10px; font-size: 11px; color: var(--text-muted); opacity: 0; transition: opacity 0.15s; pointer-events: none; }
+.mermaid:hover .mermaid-zoom-hint { opacity: 1; }
+
+/* ── Diagram lightbox ────────────────────────────────────── */
+.diagram-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(2px); align-items: center; justify-content: center; cursor: zoom-out; padding: 48px 32px; }
+.diagram-lightbox.open { display: flex; }
+.diagram-lightbox-inner { background: #ffffff; border-radius: 10px; padding: 32px; width: 88vw; max-height: 88vh; overflow: hidden; cursor: default; box-shadow: 0 24px 64px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; }
+.diagram-lightbox-inner svg { width: 100% !important; height: auto !important; max-height: 76vh; display: block; }
+.diagram-lightbox-close { position: fixed; top: 20px; right: 24px; background: #ffffff; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 1001; }
+.diagram-lightbox-close:hover { background: var(--bg-card); }
+.diagram-lightbox-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.55); color: #ffffff; font-size: 12px; padding: 6px 14px; border-radius: 20px; pointer-events: none; white-space: nowrap; z-index: 1001; }
+</style>
+<script>
+window.__mermaidPending = [];
+window.__mermaidReady = false;
+window.__renderMermaidIn = function(container) {
+  if (container) { window.__mermaidPending.push(container); }
+};
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: false, theme: 'default', flowchart: { useMaxWidth: true }, sequence: { useMaxWidth: true } });
+
+window.__renderMermaidIn = function(container) {
+  var nodes = container ? container.querySelectorAll('.mermaid:not([data-processed])') : [];
+  if (nodes.length > 0) {
+    mermaid.run({ nodes: Array.from(nodes) }).then(function() {
+      nodes.forEach(function(node) {
+        if (!node.querySelector('.mermaid-zoom-hint')) {
+          var hint = document.createElement('span');
+          hint.className = 'mermaid-zoom-hint';
+          hint.textContent = 'Click to expand';
+          node.appendChild(hint);
+        }
+      });
+    });
+  }
+};
+
+var drained = new Set();
+(window.__mermaidPending || []).forEach(function(c) {
+  if (!drained.has(c)) { drained.add(c); window.__renderMermaidIn(c); }
+});
+window.__mermaidPending = [];
+window.__mermaidReady = true;
+
+function renderActivePanels() {
+  document.querySelectorAll('.tab-panel.active').forEach(function(p) {
+    if (!drained.has(p)) { drained.add(p); window.__renderMermaidIn(p); }
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderActivePanels);
+} else {
+  renderActivePanels();
+}
+</script>
+</head><body>
+<div id="diagram-lightbox" class="diagram-lightbox" role="dialog" aria-modal="true">
+  <button class="diagram-lightbox-close" id="diagram-lightbox-close" aria-label="Close">&#x2715;</button>
+  <div class="diagram-lightbox-hint">Scroll to zoom &nbsp;&middot;&nbsp; Drag to pan &nbsp;&middot;&nbsp; Double-click to reset</div>
+  <div class="diagram-lightbox-inner" id="diagram-lightbox-inner"></div>
+</div>
+<div class="main">
+<h1>litemall</h1>
+<div class="report-card">
+  <h2>Component Information</h2>
+  <div class="report-card-body">
+    <div class="app-info-container">
+      <div class="app-info-column">
+        <div class="app-info-row"><span class="app-info-label">Component Name</span><span class="app-info-value">litemall</span></div>
+        <div class="app-info-row"><span class="app-info-label">Java Version</span><span class="app-info-value">1.8</span></div>
+        <div class="app-info-row"><span class="app-info-label">Effort</span><span class="app-info-value" id="effort-display">XL (total story points: 100)</span></div>
+      </div>
+      <div class="app-info-column">
+        <div class="app-info-row"><span class="app-info-label">Build Tools</span><span class="app-info-value">Maven, NodeJs</span></div>
+        <div class="app-info-row"><span class="app-info-label">Frameworks</span><span class="app-info-value">Spring Boot, Spring, Vue</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab-issues" data-tooltip="Issues detected in the source code">Issues</button>
+  <button class="tab-btn" data-tab="tab-arch" data-tooltip="How the app&#x27;s layers connect — from UI to data.">Architecture</button>
+  <button class="tab-btn" data-tab="tab-api" data-tooltip="Endpoints exposed by this app and how services communicate.">API Contracts</button>
+  <button class="tab-btn" data-tab="tab-config" data-tooltip="Environment settings, runtime profiles, and deployment manifests.">Configuration</button>
+  <button class="tab-btn" data-tab="tab-workflows" data-tooltip="Domain entities and the core flows users move through.">Business Workflows</button>
+  <button class="tab-btn" data-tab="tab-deps" data-tooltip="Libraries and frameworks this app depends on, grouped by category.">Dependencies</button>
+  <button class="tab-btn" data-tab="tab-data" data-tooltip="Database schema, entity relationships, and persistence behavior.">Data Model</button>
+</nav>
+<div id="tab-issues" class="tab-panel active">
+<div class="target-select-container">
+  <label for="target-select">Target Compute Service:</label>
+  <select id="target-select" onchange="onTargetChange(this.value)">
+    <option value="azure-aks">Azure Kubernetes Service</option>
+  </select>
+</div>
+<div class="report-card">
+  <h2>Issue Summary</h2>
+  <div class="report-card-body">
+    <div class="domain-summary-container" id="donut-container">
+      <div class="domain-summary-item">
+<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;transform:rotate(-90deg);">
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-mandatory)" stroke-width="15" stroke-dasharray="134.64 219.91" stroke-dashoffset="-0.00"/>
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-potential)" stroke-width="15" stroke-dasharray="61.33 219.91" stroke-dashoffset="-136.14"/>
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-optional)" stroke-width="15" stroke-dasharray="19.44 219.91" stroke-dashoffset="-198.97"/>
+</svg>
+
+        <h3>Cloud Readiness</h3>
+        <div class="count">21 issues</div>
+      </div>
+      <div class="domain-summary-item">
+<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;transform:rotate(-90deg);">
+  <circle cx="50" cy="50" r="35" fill="none" stroke="var(--color-mandatory)" stroke-width="15" stroke-dasharray="219.91 219.91" stroke-dashoffset="-0.00"/>
+</svg>
+
+        <h3>Java Upgrade</h3>
+        <div class="count">4 issues</div>
+      </div>
+    </div>
+    <div class="criticality-legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-mandatory)"></span>Mandatory</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-potential)"></span>Potential</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--color-optional)"></span>Optional</div>
+    </div>
+  </div>
+</div>
+<div class="filter-bar" id="filter-bar">
+  <div class="multi-select" id="domain-ms">
+    <button class="multi-select-btn" onclick="toggleMultiSelect('domain-ms')">Domain</button>
+    <div class="multi-select-dropdown">
+      <label class="multi-select-option"><input type="checkbox" value="cloud-readiness" onchange="onMultiSelectChange('domain-ms','Domain')"/> Cloud Readiness</label>
+      <label class="multi-select-option"><input type="checkbox" value="java-upgrade" onchange="onMultiSelectChange('domain-ms','Domain')"/> Java Upgrade</label>
+    </div>
+  </div>
+  <div class="multi-select" id="criticality-ms">
+    <button class="multi-select-btn" onclick="toggleMultiSelect('criticality-ms')">Criticality</button>
+    <div class="multi-select-dropdown">
+      <label class="multi-select-option"><input type="checkbox" value="mandatory" onchange="onMultiSelectChange('criticality-ms','Criticality')"/> Mandatory</label>
+      <label class="multi-select-option"><input type="checkbox" value="potential" onchange="onMultiSelectChange('criticality-ms','Criticality')"/> Potential</label>
+      <label class="multi-select-option"><input type="checkbox" value="optional" onchange="onMultiSelectChange('criticality-ms','Criticality')"/> Optional</label>
+    </div>
+  </div>
+  <a class="clear-filters" href="javascript:void(0)" onclick="clearAllFilters()">Clear all</a>
+</div>
+<div class="issue-section" data-domain="cloud-readiness">
+  <h2>Cloud Readiness</h2>
+  <table class="issue-table">
+    <colgroup><col class="col-issue"/><col class="col-criticality"/><col class="col-storypoint"/></colgroup>
+    <thead><tr><th>Issue Category</th><th>Criticality</th><th>Story Point</th></tr></thead>
+    <tbody>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:1,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:1,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:1,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="1" data-default-severity="mandatory" data-rule="logging-0002" onclick="toggleRow('row-cloudreadiness-0', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-0">&#x276F;</button> Avoid File System Logging in Configuration</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">1</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-0" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 16</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 17</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 23</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 28</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 29</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 35</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all-war/src/main/resources/logback-spring.xml">litemall-all-war/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 48</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 16</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 17</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 23</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 28</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 29</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 35</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-all/src/main/resources/logback-spring.xml">litemall-all/src/main/resources/logback-spring.xml</span></td><td><span class="position">Line 48</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Detected a logging configuration that writes logs to the local file system. In Azure environments, file-based appenders are discouraged due to ephemeral storage and lack of centralized access.</p><p>Recommendations:</p><ul><li>Switch to console appenders only (Logback / Log4j) and disable file or rolling file appenders.</li><li>Collect logs using Azure Monitor Logs (workspace-based Application Insights) via diagnostic settings.</li><li>Output structured JSON logs to improve KQL querying and cross-service correlation.</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="local-storage-00005" onclick="toggleRow('row-cloudreadiness-1', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-1">&#x276F;</button> File system - Java NIO</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-1" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java</span></td><td><span class="position">Line 15</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java</span></td><td><span class="position">Line 12</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java</span></td><td><span class="position">Line 15</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java</span></td><td><span class="position">Line 14</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java</span></td><td><span class="position">Line 13</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java</span></td><td><span class="position">Line 16</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/Storage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/Storage.java</span></td><td><span class="position">Line 6</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/StorageService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/StorageService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java</span></td><td><span class="position">Line 18</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java</span></td><td><span class="position">Line 38</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating an application that relies on the file system to Azure, it&#x27;s important to consider the limitations of local storage in a cloud environment.<br/> An application running inside a container could lose access to a file in local storage.</p><p> The following recommendations depend on the function of the file in local storage:</p><p> * Determine the <strong>storage needs</strong> for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.</p><p> * If persistent storage is needed, consider <strong>mounting Azure File Share</strong> or <strong>using Azure Blob Storage</strong>. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.</p><p> * <strong>Logging</strong>: Log to standard output and use Azure Monitor to collect and analyze the logs.</p><p> * <strong>Caching</strong>: Use Azure Cache for Redis as a cache backing service.</p><p> * <strong>Configuration</strong>: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="unsecure-network-protocol-00000" onclick="toggleRow('row-cloudreadiness-2', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-2">&#x276F;</button> Use of unsecured network protocols or URI libraries</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-2" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 44</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 126</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 142</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 44</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 126</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 142</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 94</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 110</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java</span></td><td><span class="position">Line 26</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Using secured protocols such as HTTPS and SFTP (over HTTP and FTP) should now be the norm as applications are more and more exposed and interconnected. <br/>This CloudReady patterns looks for unescured URI in the source code or deprecated URI libraries. <br/>Ideally, URLs should be replaced in your source code by secured protocols HTTPS and SFTP (and ensure the infrastructure implements these protocols for the resources your application calls, uses or references).</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="5" data-default-severity="mandatory" data-rule="cra-insecure-random-01000" onclick="toggleRow('row-cloudreadiness-3', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-3">&#x276F;</button> CRA: Use of insecure random number generator java.util.Random</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-3" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java</span></td><td><span class="position">Line 51</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java</span></td><td><span class="position">Line 9</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java</span></td><td><span class="position">Line 20</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponService.java</span></td><td><span class="position">Line 149</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java</span></td><td><span class="position">Line 77</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java</span></td><td><span class="position">Line 3</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java</span></td><td><span class="position">Line 15</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p><strong>EU Cyber Resilience Act (Annex I, Part I, Section 2(c))</strong> requires the use of <strong>state of the art</strong> cryptographic mechanisms, which includes the use of cryptographically secure random number generators (CSPRNG).</p><p><code>java.util.Random</code> uses a linear congruential generator (LCG) which is <strong>not cryptographically secure</strong>. Its output is predictable given enough observations, making it unsuitable for:</p><ul><li>Token/session ID generation</li><li>Nonce/IV generation for encryption</li><li>Salt generation for password hashing</li><li>Any security-sensitive random value generation</li></ul><p><strong>Recommended actions:</strong></p><ul><li>Replace <code>new Random()</code> with <code>new SecureRandom()</code> for any security-relevant random number generation.</li><li>Replace <code>Math.random()</code> with <code>SecureRandom.nextDouble()</code> for security use cases.</li><li>Replace <code>ThreadLocalRandom.current()</code> with <code>SecureRandom</code> for security contexts.</li><li>Use <code>java.security.SecureRandom</code> which provides a CSPRNG backed by the OS entropy source.</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="5" data-default-severity="mandatory" data-rule="cra-hardcoded-credential-config-03000" onclick="toggleRow('row-cloudreadiness-4', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-4">&#x276F;</button> CRA: Hard-coded credentials in configuration files</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-4" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 137</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 144</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 137</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 144</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 105</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 112</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p><strong>EU Cyber Resilience Act (Annex I, Part I, Section 2(b))</strong> requires a secure by default configuration and protection against unauthorized access.</p><p>Credentials (passwords, API keys, connection strings with embedded passwords) found in configuration files may be exposed through source control, deployment artifacts, or unauthorized file access.</p><p><strong>Recommended actions:</strong></p><ul><li>Use a secrets management service (e.g., Azure Key Vault, HashiCorp Vault) to externalize all secrets.</li><li>Use environment variable references in configuration: <code>${DB_PASSWORD}</code> or <code>${env.DB_PASSWORD}</code>.</li><li>Use Spring Cloud Config with encrypted values or Spring Cloud Vault.</li><li>Ensure configuration files with secrets are excluded from version control (<code>.gitignore</code>).</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="local-storage-00002" onclick="toggleRow('row-cloudreadiness-5', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-5">&#x276F;</button> File system - java.net.URL/URI</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-5" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java</span></td><td><span class="position">Line 111</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java</span></td><td><span class="position">Line 109</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java</span></td><td><span class="position">Line 96</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java</span></td><td><span class="position">Line 112</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java</span></td><td><span class="position">Line 36</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating an application that relies on the file system to Azure, it&#x27;s important to consider the limitations of local storage in a cloud environment.<br/> An application running inside a container could lose access to a file in local storage.</p><p> The following recommendations depend on the function of the file in local storage:</p><p> * Determine the storage needs for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.</p><p> * If persistent storage is needed, consider using Azure File Share or Azure Blob Storage. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.</p><p> * <strong>Logging</strong>: Log to standard output and use Azure Monitor to collect and analyze the logs.</p><p> * <strong>Caching</strong>: Use Azure Cache for Redis as a cache backing service.</p><p> * <strong>Configuration</strong>: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="cra-hardcoded-credential-default-pwd-04000" onclick="toggleRow('row-cloudreadiness-6', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-6">&#x276F;</button> CRA: Default or well-known password detected</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-6" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyProperties.java">litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyProperties.java</span></td><td><span class="position">Line 67</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallAdmin.java">litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallAdmin.java</span></td><td><span class="position">Line 183</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUser.java">litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUser.java</span></td><td><span class="position">Line 247</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p><strong>EU Cyber Resilience Act (Annex I, Part I, Section 2(b))</strong> requires a <strong>secure by default configuration</strong>. The use of default, well-known, or trivial passwords violates the secure-by-default principle.</p><p>ETSI EN 303 645 (referenced standard for CRA compliance) explicitly prohibits universal default passwords in Provision 5.1-1.</p><p><strong>Recommended actions:</strong></p><ul><li>Remove all default/well-known passwords from code and configuration.</li><li>Require unique, strong passwords during initial setup.</li><li>Use generated secrets that are unique per deployment.</li><li>Implement password complexity requirements.</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="local-storage-00001" onclick="toggleRow('row-cloudreadiness-7', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-7">&#x276F;</button> File system - Java IO</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-7" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/job/DbJob.java">litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/job/DbJob.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java</span></td><td><span class="position">Line 6</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating an application that relies on the file system to Azure, it&#x27;s important to consider the limitations of local storage in a cloud environment.<br/> An application running inside a container could lose access to a file in local storage.</p><p> The following recommendations depend on the function of the file in local storage:<br/> * Determine the <strong>storage needs</strong> for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.</p><p> * If persistent storage is needed, consider <strong>mounting Azure File Share</strong> or <strong>using Azure Blob Storage</strong>. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.</p><p> * <strong>Logging</strong>: Log to standard output and use Azure Monitor to collect and analyze the logs.</p><p> * <strong>Caching</strong>: Use Azure Cache for Redis as a cache backing service.</p><p> * <strong>Configuration</strong>: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="8" data-default-severity="mandatory" data-rule="cra-hardcoded-credential-password-01000" onclick="toggleRow('row-cloudreadiness-8', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-8">&#x276F;</button> CRA: Hard-coded password in Java source code</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">8</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-8" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java">litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java</span></td><td><span class="position">Line 16</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java">litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java</span></td><td><span class="position">Line 21</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p><strong>EU Cyber Resilience Act (Annex I, Part I, Section 2(b))</strong> requires products to be delivered with a <strong>secure by default configuration</strong> and to protect against unauthorized access using appropriate authentication mechanisms.</p><p>Hard-coded passwords in source code are a critical security vulnerability. They cannot be easily changed, may be exposed through version control systems, and violate the principle of secure by default.</p><p><strong>Recommended actions:</strong></p><ul><li>Move all credentials to a secure secrets management system (e.g., Azure Key Vault, HashiCorp Vault).</li><li>Use environment variables or externalized configuration for sensitive values.</li><li>Use connection pooling with credential providers instead of static credentials.</li><li>For development, use <code>.env</code> files that are excluded from version control.</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="8" data-default-severity="mandatory" data-rule="jni-native-code-00001" onclick="toggleRow('row-cloudreadiness-9', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-9">&#x276F;</button> Java Native Processes</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">8</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-9" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 14</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 35</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating an application that uses native processes to Azure, it&#x27;s important to consider that native processes might not run in a cloud or container environment. Instead, you can refactor your application to use cloud-compatible alternatives or managed services.</p><p> * <strong>Identify native process dependencies</strong>: Review all native processes used in your application and understand the purpose of each process.</p><p> * <strong>Evaluate and use cloud-compatible alternatives</strong>: For each native process, look for alternative libraries, services, or APIs that provide similar functionality and are compatible with cloud environments. Replace instances of native process usage with the chosen cloud-compatible alternatives.</p><p> * <strong>Leverage Azure managed services</strong>: Evaluate the use of Azure-managed services to replace certain native process functionalities.</p><p> * <strong>Test and validate</strong>: Thoroughly test the updated application to ensure it works correctly with the new libraries or services. Perform functional, performance, and stress tests to validate that the application meets its requirements and can handle the expected workload.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="5" data-default-severity="mandatory" data-rule="localhost-jdbc-00002" onclick="toggleRow('row-cloudreadiness-10', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-10">&#x276F;</button> Local JDBC Calls</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-10" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-db/mybatis-generator/generatorConfig.xml">litemall-db/mybatis-generator/generatorConfig.xml</span></td><td><span class="position">Line 46</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>The app is trying to access local resource by JDBC, please try to migrate the resource to cloud</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="5" data-default-severity="mandatory" data-rule="cra-weak-crypto-md5-01000" onclick="toggleRow('row-cloudreadiness-11', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-11">&#x276F;</button> CRA: Use of weak hash algorithm MD5</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-11" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java</span></td><td><span class="position">Line 112</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p><strong>EU Cyber Resilience Act (Annex I, Part I, Section 2(c))</strong> requires that products protect the confidentiality and integrity of data using encryption and hashing mechanisms that reflect the <strong>state of the art</strong>.</p><p><strong>MD5</strong> is a cryptographically broken hash algorithm. It is vulnerable to collision attacks and must not be used for:</p><ul><li>Password hashing</li><li>Digital signatures</li><li>Data integrity verification</li><li>Certificate validation</li></ul><p><strong>Recommended actions:</strong></p><ul><li>Replace <code>MessageDigest.getInstance(&quot;MD5&quot;)</code> with <code>MessageDigest.getInstance(&quot;SHA-256&quot;)</code> or <code>MessageDigest.getInstance(&quot;SHA-3-256&quot;)</code> for general hashing.</li><li>For password hashing, use <strong>bcrypt</strong>, <strong>scrypt</strong>, <strong>Argon2</strong>, or <strong>PBKDF2</strong> instead.</li><li>For HMAC operations, use <code>HmacSHA256</code> or <code>HmacSHA3-256</code>.</li></ul></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="hardcoded-ip-address" onclick="toggleRow('row-cloudreadiness-12', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-12">&#x276F;</button> Hardcoded IP Address</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-12" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java</span></td><td><span class="position">Line 29</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating environments, hard-coded IP addresses may need to be modified or eliminated.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="3" data-default-severity="potential" data-rule="azure-password-01000" onclick="toggleRow('row-cloudreadiness-13', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-13">&#x276F;</button> Password found in configuration file</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-13" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 56</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 24</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 56</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/resources/application-db.yml">litemall-db/src/main/resources/application-db.yml</span></td><td><span class="position">Line 13</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Using clear passwords in property files is a security risk, as they can be easily compromised if the files are accessed by unauthorized individuals. To enhance the security of your application, it is recommended to employ secure credential management practices.</p><p> * <strong>Azure Key Vault</strong>: Utilize Azure Key Vault to securely store and manage your application&#x27;s passwords and other sensitive credentials. Azure Key Vault provides a centralized and highly secure location for storing secrets, keys, and certificates.</p><p> * <strong>Passwordless connections</strong>: You can provide an additional layer of security and convenience for accessing resources in Azure by eliminating the need for passwords. This way you can reduce the risk of password-related vulnerabilities, such as weak passwords or password theft.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="3" data-default-severity="potential" data-rule="utf-8-by-default-00000" onclick="toggleRow('row-cloudreadiness-14', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-14">&#x276F;</button> The &#x27;java.io&#x27; constructor defaults to UTF-8</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-14" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java</span></td><td><span class="position">Line 51</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java</span></td><td><span class="position">Line 71</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 16</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 17</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 37</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 38</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>If not supplied, the <code>java.io.{{className}}</code> constructor uses UTF-8 by default. <br/> If you haven&#x27;t provided the character set, and UTF-8 is not appropriate for your class, then supply the appropriate character set to the constructor call.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="5" data-default-severity="potential" data-rule="azure-database-mysql-01000" onclick="toggleRow('row-cloudreadiness-15', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-15">&#x276F;</button> MySQL database found</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-15" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/mybatis-generator/generatorConfig.xml">litemall-db/mybatis-generator/generatorConfig.xml</span></td><td><span class="position">Line 46</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/resources/application-db.yml">litemall-db/src/main/resources/application-db.yml</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 8</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>To migrate a Java application that uses a MySQL database to Azure, you can follow these recommendations:</p><p> * Use a managed <strong>Azure Database for MySQL</strong>: For that create a managed MySQL database in Azure and choose the appropriate pricing tier based on your application&#x27;s requirements for performance, storage, and availability.</p><p> * <strong>Migrate</strong> the existing MySQL database: For that you can use the Azure Database Migration Service (DMS) to perform an online migration with minimal downtime.</p><p> * Update the application&#x27;s <strong>database connection</strong> details: Modify the Java application&#x27;s configuration to point to the newly provisioned Azure Database for MySQL. Update the connection string, hostname, port, username, and password information accordingly.</p><p> * Enable <strong>monitoring and diagnostics</strong>: Utilize Azure Monitor to gain insights into the performance and health of your Java application and the underlying MySQL database. Set up metrics, alerts, and log analytics to proactively identify and resolve issues.</p><p> * Implement <strong>security</strong> measures: Apply security best practices to protect your Java application and the MySQL database. This includes implementing authentication and authorization mechanisms with passwordless connections and leveraging Microsoft Defender for Cloud for threat detection and vulnerability assessments.</p><p> * <strong>Backup</strong> your data: Azure Database for MySQL provides automated backups by default. You can configure the retention period for backups based on your requirements. You can also enable geo-redundant backups, if needed, to enhance data durability and availability.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="5" data-default-severity="potential" data-rule="mail-00000" onclick="toggleRow('row-cloudreadiness-16', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-16">&#x276F;</button> Java Mail API</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-16" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java</span></td><td><span class="position">Line 4</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java</span></td><td><span class="position">Line 3</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java">litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java">litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java</span></td><td><span class="position">Line 11</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>The application uses email APIs to send or receive emails.<br/> In a cloud environment, mail systems should be considered backing services and treated like attached resources.<br/> You can either use SMTP directly, or use Azure Communication Services Email and migrate the email functionality of your application to Azure.</p><p> * Using <strong>Azure Communication Services</strong>: Create an Azure Communication Services resource in your Azure subscription. This will provide you with the necessary capabilities to send emails. Update your application&#x27;s email sending code to use the Azure Communication Services Email SDK or REST API. This involves integrating the Azure Communication Services Email client libraries into your application and configuring the required settings, such as the sender&#x27;s email address, recipient addresses, subject, and email content.</p><p> * Using <strong>SMTP directly</strong>: You can also use your own SMTP provider. In this case, check if port 25 is open in the App Service SKU.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:5,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="5" data-default-severity="potential" data-rule="session-00001" onclick="toggleRow('row-cloudreadiness-17', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-17">&#x276F;</button> HTTP Session data storage</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">5</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-17" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java">litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java</span></td><td><span class="position">Line 72</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java">litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java</span></td><td><span class="position">Line 31</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>When migrating an application that stores data in an HTTP Session to Azure, it&#x27;s important to consider that the HTTP Session is not a suitable mechanism for maintaining state in a cloud environment due to scaling in and out as load changes.<br/> Instead, you can leverage Azure Cache for Redis to achieve session management in a cloud-native way.</p><p> * Provide <strong>Azure Cache for Redis</strong>: Azure Cache for Redis is a fully managed, highly scalable, and distributed caching service. It allows you to store and manage session data in-memory, providing fast and efficient access.</p><p> * <strong>Configure</strong> Azure Cache for Redis: Configure the cache settings, such as cache size, eviction policies, and access control.</p><p> * <strong>Update session management</strong>: Modify your application&#x27;s session management code to use Azure Cache for Redis. Replace the usage of HTTP Session objects with the appropriate Redis-based session management implementation.</p><p> * <strong>Store and retrieve session data</strong>: Use the Azure Cache for Redis client libraries or connectors within your application to store and retrieve session data. This ensures that session state is securely managed and accessible across multiple instances of your application.</p><p> * <strong>Test and validate</strong>: Test your application to ensure that session state is maintained correctly using Azure Cache for Redis. Verify that session data is stored and retrieved accurately across multiple instances of your application.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="potential" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;potential&quot;}}' data-default-effort="3" data-default-severity="potential" data-rule="utf-8-by-default-00020" onclick="toggleRow('row-cloudreadiness-18', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-18">&#x276F;</button> The java.net.URLEncoder.encode method uses UTF-8 by default</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-potential"></span>Potential</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-18" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java</span></td><td><span class="position">Line 90</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java</span></td><td><span class="position">Line 94</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>If not supplied, the <code>java.net.URLEncoder.encode</code> method uses UTF-8 by default. <br/> If you haven&#x27;t provided the character set, and UTF-8 is not appropriate for your class, then then supply the appropriate character set to the method call.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="optional" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;}}' data-default-effort="3" data-default-severity="optional" data-rule="hardcoded-urls-00001" onclick="toggleRow('row-cloudreadiness-19', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-19">&#x276F;</button> Avoid using hardcoded URLs (HTTP protocol) in source code</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-optional"></span>Optional</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-19" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java">litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java</span></td><td><span class="position">Line 42</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java">litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java</span></td><td><span class="position">Line 43</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java">litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java</span></td><td><span class="position">Line 301</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java</span></td><td><span class="position">Line 26</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 44</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 126</span></td></tr>
+            <tr><td><span class="file-path" title="deploy/litemall/application.yml">deploy/litemall/application.yml</span></td><td><span class="position">Line 142</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 44</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 126</span></td></tr>
+            <tr><td><span class="file-path" title="docker/litemall/application.yml">docker/litemall/application.yml</span></td><td><span class="position">Line 142</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java">litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java</span></td><td><span class="position">Line 43</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java">litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java</span></td><td><span class="position">Line 44</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 94</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/resources/application-core.yml">litemall-core/src/main/resources/application-core.yml</span></td><td><span class="position">Line 110</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>This patterns verifies in source code and configuration files the presence of hardcoded URLs using the HTTP protocol (HTTP/HTTPS). This URL would need to be replaced by the new resource&#x27;s URL during the Cloud migration, if any change occured.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="optional" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;optional&quot;}}' data-default-effort="3" data-default-severity="optional" data-rule="localhost-00004" onclick="toggleRow('row-cloudreadiness-20', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-cloudreadiness-20">&#x276F;</button> Localhost Usage</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-optional"></span>Optional</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-cloudreadiness-20" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java</span></td><td><span class="position">Line 29</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>The app is trying to use localhost, please try to migrate the resource to cloud</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="issue-section" data-domain="java-upgrade">
+  <h2>Java Upgrade</h2>
+  <table class="issue-table">
+    <colgroup><col class="col-issue"/><col class="col-criticality"/><col class="col-storypoint"/></colgroup>
+    <thead><tr><th>Issue Category</th><th>Criticality</th><th>Story Point</th></tr></thead>
+    <tbody>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="2" data-default-severity="mandatory" data-rule="java-11-deprecate-javaee-00001" onclick="toggleRow('row-javaupgrade-0', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-javaupgrade-0">&#x276F;</button> The java.annotation (Common Annotations) module has been removed from OpenJDK 11</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">2</td>
+    </tr>
+    <tr class="detail-row" id="row-javaupgrade-0" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/system/SystemInistService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/system/SystemInistService.java</span></td><td><span class="position">Line 9</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/task/TaskService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/task/TaskService.java</span></td><td><span class="position">Line 4</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAddressService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAddressService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdminService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdminService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallBrandService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallBrandService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCartService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCartService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCategoryService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCategoryService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCollectService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCollectService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCommentService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCommentService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponUserService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponUserService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallFootprintService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallFootprintService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsAttributeService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsAttributeService.java</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsProductService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsProductService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsSpecificationService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsSpecificationService.java</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponRulesService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponRulesService.java</span></td><td><span class="position">Line 13</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallIssueService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallIssueService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallKeywordService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallKeywordService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallLogService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallLogService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeAdminService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeAdminService.java</span></td><td><span class="position">Line 9</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeService.java</span></td><td><span class="position">Line 12</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderGoodsService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderGoodsService.java</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java</span></td><td><span class="position">Line 14</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallPermissionService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallPermissionService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRegionService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRegionService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRoleService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRoleService.java</span></td><td><span class="position">Line 9</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSearchHistoryService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSearchHistoryService.java</span></td><td><span class="position">Line 10</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSystemConfigService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSystemConfigService.java</span></td><td><span class="position">Line 8</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallTopicService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallTopicService.java</span></td><td><span class="position">Line 12</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallUserService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallUserService.java</span></td><td><span class="position">Line 11</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/service/StatService.java">litemall-db/src/main/java/org/linlinjava/litemall/db/service/StatService.java</span></td><td><span class="position">Line 6</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>Add the <code>jakarta.annotation</code> dependency to your application. E.g. update maven <code>pom.xml</code>.</p><p> <code>&lt;groupId&gt;jakarta.annotation&lt;/groupId&gt;</code></p><p> <code>&lt;artifactId&gt;jakarta.annotation-api&lt;/artifactId&gt;</code></p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:3,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="3" data-default-severity="mandatory" data-rule="java-20-deprecate-net-00000" onclick="toggleRow('row-javaupgrade-1', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-javaupgrade-1">&#x276F;</button> java.net.URL Constructors Are Deprecated</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">3</td>
+    </tr>
+    <tr class="detail-row" id="row-javaupgrade-1" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java">litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java</span></td><td><span class="position">Line 111</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java</span></td><td><span class="position">Line 109</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java</span></td><td><span class="position">Line 96</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java">litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java</span></td><td><span class="position">Line 112</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java">litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java</span></td><td><span class="position">Line 36</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>The <code>java.net.URL</code> constructors are deprecated in JDK 20 release.</p><p>Developers are encouraged to use <code>java.net.URI</code> to parse or construct a URL. In cases where an instance of <code>java.net.URL</code> is needed to open a connection, <code>java.net.URI</code> can be used to construct or parse the URL string, possibly calling <code>URI::parseServerAuthority()</code> to validate that the authority component can be parsed as a server-based authority, and then <code>calling URI::toURL()</code> to create the URL instance.</p><p>A new method, <code>URL::of(URI, URLStreamHandler)</code> is provided for the advanced usages where there is a need to construct a URL with a given custom stream handler.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:8,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="8" data-default-severity="mandatory" data-rule="azure-java-version-01000" onclick="toggleRow('row-javaupgrade-2', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-javaupgrade-2">&#x276F;</button> Java Version Has Reached the End of Support</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">8</td>
+    </tr>
+    <tr class="detail-row" id="row-javaupgrade-2" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="pom.xml">pom.xml</span></td><td><span class="position">Line 18</span></td></tr>
+            <tr><td><span class="file-path" title="pom.xml">pom.xml</span></td><td><span class="position">Line 240</span></td></tr>
+            <tr><td><span class="file-path" title="pom.xml">pom.xml</span></td><td><span class="position">Line 241</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>The application is using a Java version that has reached the end of support. It is strongly recommended to plan and execute a migration strategy to upgrade your application to a supported Java version.<br/>Supported Java versions receive long-term support (LTS) from the Java community, including bug fixes and updates. Migrating to a supported version provides you with a stable and well-maintained platform for your application.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr class="issue-row" data-criticality="mandatory" data-targets='{&quot;azure-aks&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-appservice&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;},&quot;azure-container-apps&quot;:{&quot;effort&quot;:2,&quot;severity&quot;:&quot;mandatory&quot;}}' data-default-effort="2" data-default-severity="mandatory" data-rule="java-18-deprecate-runtime-00000" onclick="toggleRow('row-javaupgrade-3', this)" style="cursor:pointer;">
+      <td style="white-space:normal;"><div class="issue-title-cell"><button class="expand-btn" id="btn-row-javaupgrade-3">&#x276F;</button> The Runtime.exec(String, ...) method is error-prone and should not be used</div></td>
+      <td class="crit-cell"><span class="crit-label"><span class="crit-square crit-square-mandatory"></span>Mandatory</span></td>
+      <td class="sp-cell">2</td>
+    </tr>
+    <tr class="detail-row" id="row-javaupgrade-3" style="display:none;">
+      <td colspan="3">
+        <div class="detail-content">
+          <div class="file-list">
+            <table><colgroup><col style="width:70%"/><col style="width:30%"/></colgroup>
+            <thead><tr><th>File</th><th>Position</th></tr></thead><tbody>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 14</span></td></tr>
+            <tr><td><span class="file-path" title="litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java">litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java</span></td><td><span class="position">Line 35</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="explanation-panel">
+            <h4>Explanation</h4>
+            <div><p>This method is error-prone and should not be used, the corresponding method <code>ProcessBuilder</code> should be used instead. <br/>The command string is broken into tokens using only whitespace characters. For an argument with an embedded space, such as a filename, this can cause problems as the token does not include the full filename.</p></div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div><!-- #tab-issues -->
+<div id="tab-arch" class="tab-panel">
+  <div class="fact-content"><h1 id="architecture-diagram">Architecture Diagram</h1>
+<p>This repository is a multi-module Spring Boot e-commerce system with separate admin and customer API modules over a shared data and core service layer.</p>
+<h2 id="application-architecture">Application Architecture</h2>
+<div class="mermaid">
+flowchart TD
+    subgraph Client["Client Layer"]
+        AdminUI["Vue Admin UI"]
+        WxUI["WeChat Mini Program UI"]
+    end
+
+    subgraph API["API Layer - Spring Boot 2.1.5"]
+        AdminApi["litemall-admin-api"]
+        WxApi["litemall-wx-api"]
+        Monolith["litemall-all"]
+    end
+
+    subgraph Business["Business Layer"]
+        Core["litemall-core services"]
+        Security["Apache Shiro and JWT"]
+        Notify["Notify and payment integration"]
+    end
+
+    subgraph Data["Data Layer"]
+        DBModule["litemall-db MyBatis"]
+        MySQL[("MySQL 5.7")]
+        Cache["In-memory home cache"]
+    end
+
+    subgraph External["External Services"]
+        WxPay["WeChat Pay"]
+        Sms["Tencent and Aliyun SMS"]
+        Storage["OSS COS Qiniu storage"]
+    end
+
+    AdminUI -->|"HTTPS API calls"| AdminApi
+    WxUI -->|"HTTPS API calls"| WxApi
+    AdminApi -->|"module composition"| Monolith
+    WxApi -->|"module composition"| Monolith
+    AdminApi -->|"business operations"| Core
+    WxApi -->|"business operations"| Core
+    AdminApi -->|"auth checks"| Security
+    WxApi -->|"token checks"| Security
+    Core -->|"DAO queries"| DBModule
+    DBModule -->|"SQL"| MySQL
+    WxApi -->|"cached homepage catalog"| Cache
+    Core -->|"payment requests"| WxPay
+    Core -->|"notification requests"| Sms
+    Core -->|"object upload"| Storage
+</div>
+<h3 id="technology-stack-summary">Technology Stack Summary</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>Presentation</td><td>Vue (litemall-admin), WeChat Mini Program (litemall-wx)</td><td>repo-managed</td><td>Admin and customer front-end clients</td></tr>
+<tr><td>API</td><td>Spring Boot</td><td>2.1.5.RELEASE</td><td>REST API endpoints for admin and customer channels</td></tr>
+<tr><td>Security</td><td>Apache Shiro, java-jwt</td><td>1.6.0, 3.4.1</td><td>Session-based admin auth and token-based customer auth</td></tr>
+<tr><td>Business</td><td>Spring components in litemall-core</td><td>Spring Boot managed</td><td>Order, payment, notify, storage orchestration</td></tr>
+<tr><td>Data Access</td><td>MyBatis, PageHelper, Druid</td><td>1.3.2, 1.2.5, 1.2.1</td><td>Data access, paging, connection pooling</td></tr>
+<tr><td>Data Storage</td><td>MySQL</td><td>5.7 in docker-compose</td><td>Primary relational data store</td></tr>
+</tbody></table></div>
+<h3 id="data-storage-external-services">Data Storage & External Services</h3>
+<p>The application persists business entities in a shared MySQL database through MyBatis mapper/service classes in <code>litemall-db</code>. It integrates with external payment, SMS, and object-storage providers through <code>litemall-core</code>, and uses a lightweight in-process cache for selected wx homepage and catalog payloads.</p>
+<h3 id="key-architectural-decisions">Key Architectural Decisions</h3>
+<ul>
+<li>Uses a multi-module monolith where admin and wx APIs are separately packaged but share common core and db modules.</li>
+<li>Keeps data access centralized in <code>litemall-db</code> service wrappers over generated MyBatis mappers.</li>
+<li>Applies channel-specific authentication strategies: Shiro session/auth filters for admin endpoints and JWT-based login flow for wx endpoints.</li>
+</ul>
+<h2 id="component-relationships">Component Relationships</h2>
+<div class="mermaid">
+flowchart LR
+    subgraph Presentation["Presentation"]
+        AdminCtrl["Admin controllers"]
+        WxCtrl["Wx controllers"]
+    end
+
+    subgraph Business["Business Logic"]
+        AdminSvc["AdminOrderService AdminGoodsService"]
+        WxOrderSvc["WxOrderService"]
+        CoreSvc["NotifyService StorageService ExpressService"]
+    end
+
+    subgraph DataAccess["Data Access"]
+        DbSvc["Litemall DB services"]
+        Mapper["MyBatis mappers"]
+        Mysql[("MySQL")]
+    end
+
+    subgraph Infra["Infrastructure"]
+        ShiroFilter["Shiro filter chain"]
+        JwtAuth["Wx JWT auth interceptor"]
+        Scheduler["Scheduled jobs"]
+        WxPay["WeChat Pay SDK"]
+    end
+
+    AdminCtrl -->|"delegates"| AdminSvc
+    WxCtrl -->|"delegates"| WxOrderSvc
+    AdminSvc -->|"uses"| CoreSvc
+    WxOrderSvc -->|"uses"| CoreSvc
+    AdminSvc -->|"queries and updates"| DbSvc
+    WxOrderSvc -->|"queries and updates"| DbSvc
+    DbSvc -->|"mapper calls"| Mapper
+    Mapper -->|"SQL"| Mysql
+    ShiroFilter -.->|"intercepts /admin"| AdminCtrl
+    JwtAuth -.->|"intercepts /wx"| WxCtrl
+    Scheduler -.->|"updates order lifecycle"| DbSvc
+    WxOrderSvc -->|"prepay refund notify"| WxPay
+</div>
+<h3 id="component-inventory">Component Inventory</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Component</th><th>Layer</th><th>Type</th><th>Responsibility</th>
+</tr></thead><tbody>
+<tr><td>AdminOrderController</td><td>Presentation</td><td>REST Controller</td><td>Admin operations for order query, refund, ship, pay, delete</td></tr>
+<tr><td>WxOrderController</td><td>Presentation</td><td>REST Controller</td><td>Customer order submission, payment, cancellation, refund, confirm</td></tr>
+<tr><td>AdminOrderService</td><td>Business Logic</td><td>Service</td><td>Enforces admin-side order state transitions and side effects</td></tr>
+<tr><td>WxOrderService</td><td>Business Logic</td><td>Service</td><td>Runs transactional customer checkout and payment flow</td></tr>
+<tr><td>NotifyService</td><td>Business Logic</td><td>Service</td><td>Sends SMS and mail notifications for order events</td></tr>
+<tr><td>LitemallOrderService</td><td>Data Access</td><td>Service</td><td>Order persistence queries plus optimistic locking updates</td></tr>
+<tr><td>LitemallOrderMapper / OrderMapper</td><td>Data Access</td><td>MyBatis Mapper</td><td>CRUD and custom SQL projections over order tables</td></tr>
+<tr><td>ShiroConfig</td><td>Infrastructure</td><td>Security Config</td><td>Declares admin filter chain and authorization setup</td></tr>
+<tr><td>OrderJob</td><td>Infrastructure</td><td>Scheduled Job</td><td>Periodically auto-confirms and comment-expires orders</td></tr>
+<tr><td>WxConfig</td><td>Infrastructure</td><td>Integration Config</td><td>Wires WeChat miniapp and payment SDK clients</td></tr>
+</tbody></table></div></div>
+</div>
+<div id="tab-api" class="tab-panel">
+  <div class="fact-content"><h1 id="api-service-communication-contracts">API & Service Communication Contracts</h1>
+<p>The codebase exposes a broad REST API surface through separate admin and wx API modules, with synchronous in-process service interactions and external synchronous payment or notification calls.</p>
+<h2 id="service-catalog">Service Catalog</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Port</th><th>Category</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>litemall-admin-api</td><td>8083</td><td>API Layer</td><td>Back-office management APIs for catalog, users, orders, promotion, and configuration</td></tr>
+<tr><td>litemall-wx-api</td><td>8082</td><td>API Layer</td><td>Customer-facing APIs for auth, catalog browsing, cart, order lifecycle, and aftersale</td></tr>
+<tr><td>litemall-core</td><td>inherited in host app</td><td>Business</td><td>Shared notification, payment client, storage, express, and utility components</td></tr>
+<tr><td>litemall-db</td><td>inherited in host app</td><td>Business</td><td>Shared MyBatis-based persistence services and mapper layer</td></tr>
+<tr><td>litemall-all</td><td>8080</td><td>Infrastructure</td><td>Monolithic assembly and runtime host for admin and wx modules</td></tr>
+</tbody></table></div>
+<h2 id="api-endpoints-inventory">API Endpoints Inventory</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Method</th><th>Path</th><th>Request Type</th><th>Response Type</th>
+</tr></thead><tbody>
+<tr><td>litemall-wx-api (WxAuthController)</td><td>POST</td><td><code>/wx/auth/login</code>, <code>/wx/auth/register</code>, <code>/wx/auth/login_by_weixin</code></td><td>JSON body parsed from raw string</td><td>JSON object with token and user profile</td></tr>
+<tr><td>litemall-wx-api (WxGoodsController)</td><td>GET</td><td><code>/wx/goods/list</code>, <code>/wx/goods/detail</code>, <code>/wx/goods/related</code></td><td>Query params (<code>category</code>, <code>keyword</code>, <code>goodsId</code>)</td><td>JSON object with goods lists and detail payloads</td></tr>
+<tr><td>litemall-wx-api (WxCartController)</td><td>GET/POST</td><td><code>/wx/cart/index</code>, <code>/wx/cart/add</code>, <code>/wx/cart/update</code>, <code>/wx/cart/checkout</code></td><td>JSON body for mutations; query for reads</td><td>JSON cart aggregate and operation status</td></tr>
+<tr><td>litemall-wx-api (WxOrderController)</td><td>POST/GET</td><td><code>/wx/order/submit</code>, <code>/wx/order/prepay</code>, <code>/wx/order/pay-notify</code>, <code>/wx/order/refund</code>, <code>/wx/order/confirm</code>, <code>/wx/order/list</code></td><td>JSON body for lifecycle actions; query for list</td><td>JSON order summary, payment payload, or state result</td></tr>
+<tr><td>litemall-wx-api (WxStorageController)</td><td>POST/GET</td><td><code>/wx/storage/upload</code>, <code>/wx/storage/fetch/{key:.+}</code></td><td>Multipart upload or path parameter</td><td>JSON metadata or binary stream</td></tr>
+<tr><td>litemall-admin-api (AdminAuthController)</td><td>GET/POST</td><td><code>/admin/auth/kaptcha</code>, <code>/admin/auth/login</code>, <code>/admin/auth/logout</code>, <code>/admin/auth/info</code></td><td>Login JSON body, session cookie</td><td>JSON auth profile and permission payload</td></tr>
+<tr><td>litemall-admin-api (AdminGoodsController)</td><td>GET/POST</td><td><code>/admin/goods/list</code>, <code>/admin/goods/create</code>, <code>/admin/goods/update</code>, <code>/admin/goods/delete</code></td><td>JSON body for create or update</td><td>JSON entity payload and operation status</td></tr>
+<tr><td>litemall-admin-api (AdminOrderController)</td><td>GET/POST</td><td><code>/admin/order/list</code>, <code>/admin/order/detail</code>, <code>/admin/order/refund</code>, <code>/admin/order/ship</code>, <code>/admin/order/pay</code></td><td>Query filters and JSON command body</td><td>JSON order data and command result</td></tr>
+<tr><td>litemall-admin-api (AdminConfigController)</td><td>GET/POST</td><td><code>/admin/config/mall</code>, <code>/admin/config/express</code>, <code>/admin/config/order</code>, <code>/admin/config/wx</code>, <code>/admin/config/storage</code></td><td>JSON config sections</td><td>JSON persisted config values</td></tr>
+<tr><td>litemall-admin-api (AdminRoleController)</td><td>GET/POST</td><td><code>/admin/role/list</code>, <code>/admin/role/create</code>, <code>/admin/role/update</code>, <code>/admin/role/permissions</code></td><td>JSON role and permission assignments</td><td>JSON role and permission data</td></tr>
+</tbody></table></div>
+<p>API versioning scheme: endpoints are grouped by path prefix (<code>/admin/<em></code> and <code>/wx/</em></code>) without explicit URI version segments.</p>
+<h2 id="management-observability-endpoints">Management & Observability Endpoints</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Endpoint</th><th>Custom Metrics (if any)</th>
+</tr></thead><tbody>
+<tr><td>litemall-admin-api</td><td><code>/swagger-ui.html</code> and Swagger bootstrap UI routes</td><td>None detected in source</td></tr>
+<tr><td>litemall-wx-api</td><td><code>/swagger-ui.html</code> and Swagger bootstrap UI routes</td><td>None detected in source</td></tr>
+<tr><td>litemall-all</td><td>Logback output and scheduled order jobs</td><td>No explicit Micrometer or Actuator endpoints detected</td></tr>
+</tbody></table></div>
+<h2 id="dtos-contracts">DTOs & Contracts</h2>
+<p>The API commonly uses raw JSON bodies parsed with <code>JacksonUtil</code> in controllers and services, with domain objects such as <code>LitemallOrder</code>, <code>LitemallCart</code>, <code>LitemallAddress</code>, <code>LitemallCoupon</code>, and <code>LitemallAftersale</code> serving as service-level request or response contracts. <code>OrderVo</code> and <code>UserVo</code> in <code>litemall-db</code> provide composite response models for admin order views and user identity views. Gateway-level DTO aggregation is implemented as assembled maps returned from service methods such as <code>WxOrderService</code> and <code>AdminOrderService</code>, rather than dedicated immutable DTO classes. Serialization is Jackson-based via Spring Boot JSON starter. Swagger documentation is annotation-driven (<code>@EnableSwagger2</code>) and there are no protobuf or GraphQL schemas.</p>
+<h2 id="communication-patterns">Communication Patterns</h2>
+<p>Communication is primarily synchronous and in-process: controllers delegate to service classes, which call <code>litemall-db</code> services and MyBatis mappers against a shared database. External synchronous calls are used for WeChat payment (prepay, notify, refund), SMS template notifications, and object storage provider APIs. Asynchronous communication is limited to scheduled jobs and executor-based parallel fetches inside selected wx handlers, with no message queue usage detected. Circuit-breaker or retry frameworks are not present; failure handling relies on direct error responses and transactional rollback in key operations (<code>@Transactional</code> on order submit and refund flows). Startup availability is tied to MySQL readiness for the assembled runtime service. Security posture: admin APIs are guarded by Shiro auth chain on <code>/admin/**</code>, wx APIs use login token flow and authorization interceptors, and transport-level TLS termination is expected externally (no in-app HTTPS server config found).</p>
+<h2 id="service-technology-matrix">Service Technology Matrix</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Web</th><th>Data Access</th><th>Discovery</th><th>Gateway</th><th>Actuator</th><th>Cache</th><th>Metrics</th>
+</tr></thead><tbody>
+<tr><td>litemall-admin-api</td><td>Spring MVC</td><td>Uses <code>litemall-db</code> services</td><td>None</td><td>No</td><td>No</td><td>Minimal</td><td>No explicit exporter</td></tr>
+<tr><td>litemall-wx-api</td><td>Spring MVC</td><td>Uses <code>litemall-db</code> services</td><td>None</td><td>No</td><td>No</td><td>In-memory home and catalog cache helper</td><td>No explicit exporter</td></tr>
+<tr><td>litemall-core</td><td>Spring Beans</td><td>Indirect through db module</td><td>None</td><td>No</td><td>No</td><td>None</td><td>No explicit exporter</td></tr>
+<tr><td>litemall-db</td><td>N/A</td><td>MyBatis mappers and services</td><td>None</td><td>No</td><td>No</td><td>None</td><td>No explicit exporter</td></tr>
+<tr><td>litemall-all</td><td>Spring Boot host</td><td>Composition of modules</td><td>None</td><td>No</td><td>No</td><td>Inherited from modules</td><td>No explicit exporter</td></tr>
+</tbody></table></div>
+<h2 id="service-communication-sequence">Service Communication Sequence</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant Client as "Wx Client"
+    participant WxApi as "WxOrderController"
+    participant WxSvc as "WxOrderService"
+    participant CouponSvc as "CouponVerifyService"
+    participant DbSvc as "Litemall DB Services"
+    participant Mysql as "MySQL"
+    participant Pay as "WeChat Pay"
+
+    Client->>WxApi: POST /wx/order/submit
+    WxApi->>WxSvc: submit(userId, orderBody)
+    WxSvc->>DbSvc: query address cart goods coupon
+    DbSvc->>Mysql: select and lock inventory
+    Mysql-->>DbSvc: domain rows
+    WxSvc->>CouponSvc: validate coupon and eligibility
+    CouponSvc-->>WxSvc: coupon accepted or rejected
+    alt Validation passes
+        WxSvc->>DbSvc: create order and order goods
+        WxSvc->>DbSvc: reduce product stock and clear checked cart
+        DbSvc->>Mysql: transactional updates
+        WxSvc-->>WxApi: submit result with orderId
+        WxApi-->>Client: 200 order created
+        Client->>WxApi: POST /wx/order/prepay
+        WxApi->>WxSvc: prepay(orderId)
+        WxSvc->>Pay: unified order request
+        Pay-->>WxSvc: prepay token package
+        WxSvc-->>Client: payment payload
+    else Validation fails
+        WxSvc-->>WxApi: business failure code
+        WxApi-->>Client: 4xx with reason
+    end
+</div></div>
+</div>
+<div id="tab-config" class="tab-panel">
+  <div class="fact-content"><h1 id="configuration-externalized-settings-inventory">Configuration & Externalized Settings Inventory</h1>
+<p>Configuration is primarily file-based through Spring <code>application*.yml</code> files across modules plus deployment overlays in docker and deploy folders, with profile composition used to assemble runtime behavior.</p>
+<h2 id="configuration-sources">Configuration Sources</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Source</th><th>Type</th><th>Path or Location</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>Spring base runtime config</td><td>YAML</td><td><code>litemall-all/src/main/resources/application.yml</code></td><td>Main runtime profile composition and server settings</td></tr>
+<tr><td>Admin runtime config</td><td>YAML</td><td><code>litemall-admin-api/src/main/resources/application.yml</code></td><td>Admin port and logging levels</td></tr>
+<tr><td>Wx runtime config</td><td>YAML</td><td><code>litemall-wx-api/src/main/resources/application.yml</code></td><td>Wx port and logging levels</td></tr>
+<tr><td>DB runtime config</td><td>YAML</td><td><code>litemall-db/src/main/resources/application-db.yml</code></td><td>Druid datasource, JDBC, and pagehelper</td></tr>
+<tr><td>Core module config</td><td>YAML</td><td><code>litemall-core/src/main/resources/application-core.yml</code></td><td>wx, storage, express, and notify settings</td></tr>
+<tr><td>Deployment override config</td><td>YAML</td><td><code>deploy/litemall/application.yml</code></td><td>Externalized deployment-time values</td></tr>
+<tr><td>Container orchestration</td><td>YAML</td><td><code>docker/docker-compose.yml</code></td><td>MySQL and app service wiring and startup order</td></tr>
+<tr><td>Build metadata</td><td>Maven POM</td><td><code>pom.xml</code> and module <code>pom.xml</code> files</td><td>Dependency and plugin version management</td></tr>
+</tbody></table></div>
+<h2 id="build-profiles">Build Profiles</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Profile</th><th>Activation</th><th>Purpose</th><th>Key Dependencies or Plugins</th>
+</tr></thead><tbody>
+<tr><td>Default Maven build (no named profile)</td><td><code>mvn</code> standard lifecycle</td><td>Compiles all modules and packages runnable jars</td><td><code>maven-compiler-plugin</code>, <code>spring-boot-maven-plugin</code></td></tr>
+<tr><td><code>repackage</code> plugin execution</td><td>Triggered during package in API and all modules</td><td>Produces executable Spring Boot jars</td><td><code>spring-boot-maven-plugin</code> execution id <code>repackage</code></td></tr>
+<tr><td>Resource copy executions</td><td>Triggered in <code>litemall-all</code> package phase</td><td>Copies static/admin assets into assembled runtime package</td><td><code>maven-resources-plugin</code> execution ids <code>copy-resources</code>, <code>copy-resources-vue</code></td></tr>
+</tbody></table></div>
+<h2 id="runtime-profiles">Runtime Profiles</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Profile</th><th>Activation Method</th><th>Config Files</th><th>Key Overrides</th>
+</tr></thead><tbody>
+<tr><td><code>db</code></td><td>Included in module <code>spring.profiles.active</code></td><td><code>litemall-db/application.yml</code> plus <code>application-db.yml</code></td><td>Enables datasource and MyBatis settings</td></tr>
+<tr><td><code>core</code></td><td>Included in API and all modules</td><td><code>litemall-core/application.yml</code> plus <code>application-core.yml</code></td><td>Enables payment, storage, notify, express config groups</td></tr>
+<tr><td><code>admin</code></td><td>Set in admin module defaults</td><td><code>litemall-admin-api/application.yml</code>, optional <code>application-admin.yml</code></td><td>Binds admin server port and logging category</td></tr>
+<tr><td><code>wx</code></td><td>Set in wx module defaults</td><td><code>litemall-wx-api/application.yml</code>, optional <code>application-wx.yml</code></td><td>Binds wx server port and logging category</td></tr>
+<tr><td><code>none</code> (deploy sample)</td><td>Set in deploy package</td><td><code>deploy/litemall/application.yml</code></td><td>Single-file external deployment override</td></tr>
+</tbody></table></div>
+<h2 id="properties-inventory">Properties Inventory</h2>
+<h3 id="litemall-all">litemall-all</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Property Key</th><th>Default</th><th>Profiles</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td><code>spring.profiles.active</code></td><td><code>db, core, admin, wx</code></td><td>all</td><td><code>litemall-all/src/main/resources/application.yml</code></td></tr>
+<tr><td><code>server.port</code></td><td><code>8080</code></td><td>all</td><td>same</td></tr>
+<tr><td><code>spring.servlet.multipart.max-file-size</code></td><td><code>20MB</code></td><td>all</td><td>same</td></tr>
+<tr><td><code>logging.config</code></td><td><code>classpath:logback-spring.xml</code></td><td>all</td><td>same</td></tr>
+<tr><td><code>swagger.production</code></td><td><code>false</code></td><td>all</td><td>same</td></tr>
+</tbody></table></div>
+<h3 id="litemall-admin-api">litemall-admin-api</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Property Key</th><th>Default</th><th>Profiles</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td><code>spring.profiles.active</code></td><td><code>db, core, admin</code></td><td>admin runtime</td><td><code>litemall-admin-api/src/main/resources/application.yml</code></td></tr>
+<tr><td><code>server.port</code></td><td><code>8083</code></td><td>admin runtime</td><td>same</td></tr>
+<tr><td><code>logging.level.org.linlinjava.litemall.admin</code></td><td><code>DEBUG</code></td><td>admin runtime</td><td>same</td></tr>
+<tr><td><code>swagger.production</code></td><td><code>false</code></td><td>admin runtime</td><td>same</td></tr>
+</tbody></table></div>
+<h3 id="litemall-wx-api">litemall-wx-api</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Property Key</th><th>Default</th><th>Profiles</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td><code>spring.profiles.active</code></td><td><code>db, core, wx</code></td><td>wx runtime</td><td><code>litemall-wx-api/src/main/resources/application.yml</code></td></tr>
+<tr><td><code>server.port</code></td><td><code>8082</code></td><td>wx runtime</td><td>same</td></tr>
+<tr><td><code>logging.level.org.linlinjava.litemall.wx</code></td><td><code>DEBUG</code></td><td>wx runtime</td><td>same</td></tr>
+<tr><td><code>swagger.production</code></td><td><code>false</code></td><td>wx runtime</td><td>same</td></tr>
+</tbody></table></div>
+<h3 id="litemall-db-and-core">litemall-db and core</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Property Key</th><th>Default</th><th>Profiles</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td><code>spring.datasource.druid.url</code></td><td>JDBC mysql URL</td><td><code>db</code></td><td><code>litemall-db/src/main/resources/application-db.yml</code></td></tr>
+<tr><td><code>spring.datasource.druid.username</code></td><td>configured in file</td><td><code>db</code></td><td>same</td></tr>
+<tr><td><code>spring.datasource.druid.password</code></td><td>configured in file</td><td><code>db</code></td><td>same</td></tr>
+<tr><td><code>pagehelper.helperDialect</code></td><td><code>mysql</code></td><td><code>db</code></td><td>same</td></tr>
+<tr><td><code>litemall.wx.app-id</code></td><td>configured in file</td><td><code>core</code></td><td><code>litemall-core/src/main/resources/application-core.yml</code></td></tr>
+<tr><td><code>litemall.notify.mail.enable</code></td><td><code>false</code></td><td><code>core</code></td><td>same</td></tr>
+<tr><td><code>litemall.storage.active</code></td><td><code>local</code></td><td><code>core</code></td><td>same</td></tr>
+</tbody></table></div>
+<h2 id="startup-parameters-resource-requirements">Startup Parameters & Resource Requirements</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>JVM or Runtime Options</th><th>Memory</th><th>Instance Count</th>
+</tr></thead><tbody>
+<tr><td>docker litemall container</td><td><code>java -Djava.security.egd=file:/dev/./urandom -jar litemall.jar</code></td><td>Not explicitly constrained in compose</td><td>1 in docker-compose sample</td></tr>
+<tr><td>docker mysql57 container</td><td>MySQL image command args for charset and auth plugin</td><td>Not explicitly constrained in compose</td><td>1 in docker-compose sample</td></tr>
+<tr><td>module dev run</td><td>Standard Spring Boot defaults</td><td>Not specified in repository</td><td>Developer controlled</td></tr>
+</tbody></table></div>
+<h2 id="startup-dependency-chain">Startup Dependency Chain</h2>
+<ol>
+<li><code>mysql57</code> starts first and initializes schema from mounted init SQL directory.</li>
+<li><code>litemall</code> application container starts after MySQL via docker-compose <code>depends_on</code>.</li>
+<li>At runtime, assembled app activates <code>db,core,admin,wx</code> profiles and wires datasource-dependent modules before serving API traffic.</li>
+</ol>
+<h2 id="secrets-sensitive-configuration">Secrets & Sensitive Configuration</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Secret Reference</th><th>Type</th><th>Storage (masked)</th>
+</tr></thead><tbody>
+<tr><td><code>spring.datasource.druid.password</code></td><td>Database credential</td><td>YAML file value <code>[MASKED]</code></td></tr>
+<tr><td><code>litemall.wx.app-secret</code></td><td>External API secret</td><td>YAML file value <code>[MASKED]</code></td></tr>
+<tr><td><code>litemall.wx.mch-key</code></td><td>Payment key</td><td>YAML file value <code>[MASKED]</code></td></tr>
+<tr><td><code>litemall.notify.mail.password</code></td><td>SMTP credential</td><td>YAML file value <code>[MASKED]</code></td></tr>
+<tr><td><code>litemall.storage.tencent.secretKey</code></td><td>Cloud storage key</td><td>YAML file value <code>[MASKED]</code></td></tr>
+<tr><td><code>MYSQL_ROOT_PASSWORD</code></td><td>Container DB root password</td><td>docker-compose environment value <code>[MASKED]</code></td></tr>
+</tbody></table></div>
+<h3 id="secrets-provisioning-workflow">Secrets Provisioning Workflow</h3>
+<p>Secrets are currently file and environment-variable driven: module YAML files and docker-compose variables provide credentials consumed at application startup. No vault or managed identity integration is declared in the repository. Operationally, deployers must inject environment-specific secret values (DB, payment, storage, notification) before runtime packaging or container start.</p>
+<h2 id="feature-flags">Feature Flags</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Flag Name</th><th>Default</th><th>Controlled By</th>
+</tr></thead><tbody>
+<tr><td><code>swagger.production</code></td><td><code>false</code> in module configs, <code>true</code> in deploy sample</td><td>YAML property override per environment</td></tr>
+<tr><td><code>litemall.notify.mail.enable</code></td><td><code>false</code></td><td><code>application-core.yml</code></td></tr>
+<tr><td><code>litemall.notify.sms.enable</code></td><td><code>false</code></td><td><code>application-core.yml</code></td></tr>
+<tr><td><code>litemall.express.enable</code></td><td><code>false</code></td><td><code>application-core.yml</code></td></tr>
+<tr><td><code>HomeCacheManager.ENABLE</code></td><td><code>false</code></td><td>Static code constant in wx module</td></tr>
+</tbody></table></div>
+<h2 id="framework-runtime-versions">Framework & Runtime Versions</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Component</th><th>Version</th><th>Source</th>
+</tr></thead><tbody>
+<tr><td>Spring Boot</td><td>2.1.5.RELEASE</td><td>root <code>pom.xml</code> parent</td></tr>
+<tr><td>Java runtime target</td><td>1.8</td><td>root <code>pom.xml</code> compiler properties and Dockerfile base image</td></tr>
+<tr><td>MyBatis starter</td><td>1.3.2</td><td>root <code>pom.xml</code> dependency management</td></tr>
+<tr><td>PageHelper starter</td><td>1.2.5</td><td>root <code>pom.xml</code> dependency management</td></tr>
+<tr><td>Apache Shiro starter</td><td>1.6.0</td><td>root <code>pom.xml</code> dependency management</td></tr>
+<tr><td>MySQL connector</td><td>8.0.28</td><td>root and db module <code>pom.xml</code></td></tr>
+<tr><td>Docker base image</td><td><code>openjdk:8-jre</code></td><td><code>docker/litemall/Dockerfile</code></td></tr>
+<tr><td>Build tool</td><td>Maven (multi-module)</td><td>repository <code>pom.xml</code> structure</td></tr>
+</tbody></table></div></div>
+</div>
+<div id="tab-workflows" class="tab-panel">
+  <div class="fact-content"><h1 id="core-business-workflows">Core Business Workflows</h1>
+<p>The application implements end-to-end e-commerce workflows for customer ordering and admin fulfillment, including payment, refund, shipment, coupon, and aftersale handling.</p>
+<h2 id="domain-entities">Domain Entities</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Entity</th><th>Service / Bounded Context</th><th>Description</th><th>Key Relationships</th>
+</tr></thead><tbody>
+<tr><td>User</td><td>Customer Identity</td><td>Shopper account and login identity</td><td>Owns addresses, carts, orders, coupons</td></tr>
+<tr><td>Goods</td><td>Catalog Management</td><td>Product information and sale flags</td><td>Linked to category, brand, products, attributes</td></tr>
+<tr><td>Cart</td><td>Shopping Context</td><td>User-selected goods before checkout</td><td>Ties user to goods and product SKU</td></tr>
+<tr><td>Order</td><td>Order Management</td><td>Commercial transaction lifecycle aggregate</td><td>Contains order-goods rows and aftersale state</td></tr>
+<tr><td>OrderGoods</td><td>Fulfillment</td><td>Line items and quantity snapshot</td><td>Child of order; references goods and product</td></tr>
+<tr><td>Coupon / CouponUser</td><td>Promotion</td><td>Discount policy and user assignment</td><td>Applied during submit and refunded on rollback</td></tr>
+<tr><td>Aftersale</td><td>Post-order Support</td><td>Return or aftersale request state</td><td>Attached to a completed order</td></tr>
+<tr><td>Groupon / GrouponRules</td><td>Promotion Campaign</td><td>Group-buy activity and participation</td><td>Influences checkout eligibility and pricing</td></tr>
+</tbody></table></div>
+<h2 id="service-to-domain-mapping">Service-to-Domain Mapping</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Domain Context</th><th>Owned Entities</th><th>External Dependencies</th>
+</tr></thead><tbody>
+<tr><td>litemall-wx-api</td><td>Customer Commerce</td><td>Order, Cart, Coupon usage, Aftersale initiation</td><td>WeChat Pay, notification services, shared db services</td></tr>
+<tr><td>litemall-admin-api</td><td>Operations and Fulfillment</td><td>Order fulfillment, refund confirmation, config, role management</td><td>WeChat refund API, notification services, shared db services</td></tr>
+<tr><td>litemall-db</td><td>Persistence Context</td><td>All platform entities and state transitions</td><td>MySQL</td></tr>
+<tr><td>litemall-core</td><td>Integration Context</td><td>Notification, storage, express, payment client wiring</td><td>SMS vendors, object storage vendors, WeChat APIs</td></tr>
+</tbody></table></div>
+<h2 id="primary-workflows">Primary Workflows</h2>
+<h3 id="workflow-1-customer-checkout-and-payment">Workflow 1: Customer checkout and payment</h3>
+<p>Entry point is <code>POST /wx/order/submit</code>, followed by payment endpoints (<code>/wx/order/prepay</code> or <code>/wx/order/h5pay</code>). The flow validates address, cart contents, coupon eligibility, and optional groupon constraints, then creates order records, decrements inventory, and clears checked cart items in a transaction. Payment callbacks from <code>/wx/order/pay-notify</code> transition orders from created to paid and trigger notification side effects.</p>
+<h3 id="workflow-2-admin-refund-and-fulfillment">Workflow 2: Admin refund and fulfillment</h3>
+<p>Admin operators use <code>/admin/order/refund</code>, <code>/admin/order/ship</code>, and <code>/admin/order/pay</code> to advance order fulfillment. Refund validates current order status and amount, calls external payment refund, updates order and stock, reverts coupon assignments, and notifies users. Shipping transitions paid orders to shipped state and emits shipment notifications.</p>
+<h3 id="workflow-3-scheduled-order-lifecycle-maintenance">Workflow 3: Scheduled order lifecycle maintenance</h3>
+<p>Background jobs (<code>OrderJob</code>) run on schedules to auto-confirm long-unreceived shipped orders and expire commentable windows after configured day thresholds. This keeps order lifecycle moving even without manual user action.</p>
+<h2 id="cross-service-data-flows">Cross-Service Data Flows</h2>
+<p>The application uses in-process module composition rather than networked microservice calls. wx and admin APIs both orchestrate <code>litemall-db</code> services and shared domain entities from one database. Checkout flow joins address, cart, coupon, goods, and groupon data before creating the order aggregate. On failure (invalid coupon, expired groupon, insufficient stock, payment exception), the operation returns business errors and transactional updates are rolled back. For read-heavy homepage and catalog paths, wx controllers can return cached aggregate payloads when enabled.</p>
+<h2 id="business-workflow-sequence">Business Workflow Sequence</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant Shopper
+    participant WxCtrl as "WxOrderController"
+    participant WxSvc as "WxOrderService"
+    participant Promo as "Coupon and Groupon Services"
+    participant OrderDb as "Order and Cart Services"
+    participant Pay as "WeChat Pay"
+
+    Shopper->>WxCtrl: Submit checkout request
+    WxCtrl->>WxSvc: submit(userId, order data)
+    WxSvc->>OrderDb: Load checked cart and address
+    WxSvc->>Promo: Validate coupon and groupon participation
+    alt Eligible for checkout
+        WxSvc->>OrderDb: Create order and order goods
+        WxSvc->>OrderDb: Deduct stock and clear cart
+        WxCtrl-->>Shopper: Order created with orderId
+        Shopper->>WxCtrl: Request prepay token
+        WxCtrl->>WxSvc: prepay(orderId)
+        WxSvc->>Pay: Create unified payment order
+        Pay-->>WxSvc: Return payment payload
+        WxSvc-->>Shopper: Payment package
+        Pay-->>WxCtrl: Payment notify callback
+        WxCtrl->>WxSvc: payNotify(event)
+        WxSvc->>OrderDb: Mark order paid and persist pay info
+        WxSvc-->>Shopper: Payment success result
+    else Validation failed
+        WxSvc-->>WxCtrl: Business error code
+        WxCtrl-->>Shopper: Reject checkout
+    end
+</div>
+<h2 id="business-rules-decision-logic">Business Rules & Decision Logic</h2>
+<ul>
+<li>Checkout requires authenticated user, valid address, non-empty checked cart, and valid coupon or groupon references.</li>
+<li>Groupon rules enforce campaign state, participant count limits, and anti-self-join conditions before order creation.</li>
+<li>Order lifecycle uses explicit status transitions (<code>create</code>, <code>pay</code>, <code>ship</code>, <code>confirm</code>, <code>refund</code>, <code>auto-confirm</code>) checked before each command.</li>
+<li>Refund flow enforces actual-price consistency and current refund state before invoking external payment reversal.</li>
+<li>Core order mutation paths are transactional (<code>@Transactional</code>), so stock, coupons, and order rows stay consistent on failures.</li>
+<li>Scheduled rules automatically confirm stale shipped orders and expire pending comment windows based on configured day thresholds.</li>
+</ul></div>
+</div>
+<div id="tab-deps" class="tab-panel">
+  <div class="fact-content"><h1 id="dependency-map">Dependency Map</h1>
+<p>This Java multi-module application declares a Maven-managed dependency set centered on Spring Boot and MyBatis, with approximately 26 distinct non-test external libraries and 4 explicit test-scope libraries.</p>
+<h2 id="dependencies">Dependencies</h2>
+<div class="mermaid">
+flowchart LR
+    App["litemall multi-module"]
+
+    subgraph Web["Web Frameworks"]
+        SpringWeb["spring-boot-starter-web 2.1.5"]
+        Swagger2["springfox-swagger2 2.9.2"]
+        SwaggerUI["springfox-swagger-ui 2.10.0"]
+        SwaggerBoot["swagger-bootstrap-ui 1.9.6"]
+    end
+
+    subgraph DB["Database and ORM"]
+        Mybatis["mybatis-spring-boot-starter 1.3.2"]
+        PageHelper["pagehelper-spring-boot-starter 1.2.5"]
+        MysqlDriver["mysql-connector-java 8.0.28"]
+        Druid["druid-spring-boot-starter 1.2.1"]
+    end
+
+    subgraph Security["Security"]
+        Shiro["shiro-spring-boot-web-starter 1.6.0"]
+        Jwt["java-jwt 3.4.1"]
+    end
+
+    subgraph Integration["Messaging and External Integration"]
+        WxMini["weixin-java-miniapp 4.1.0"]
+        WxPay["weixin-java-pay 4.1.0"]
+        QcloudSms["qcloudsms 1.0.5"]
+        AliyunCore["aliyun-java-sdk-core 4.0.3"]
+    end
+
+    subgraph Storage["Utilities"]
+        Cos["cos_api 5.6.24"]
+        Oss["aliyun-sdk-oss 2.5.0"]
+        Qiniu["qiniu-java-sdk 7.2.x"]
+        Guava["guava 32.0.0-jre"]
+        Validator["hibernate-validator 6.2.0"]
+        Kaptcha["kaptcha 2.3.2"]
+    end
+
+    subgraph Logging["Logging and JSON"]
+        Json["spring-boot-starter-json 2.1.5"]
+        Mail["spring-boot-starter-mail 2.1.5"]
+    end
+
+    Parent["spring-boot-starter-parent 2.1.5"]
+
+    App -->|"web"| Web
+    App -->|"persistence"| DB
+    App -->|"security"| Security
+    App -->|"integration"| Integration
+    App -->|"utility"| Storage
+    App -->|"serialization and mail"| Logging
+    Parent -.->|"manages versions"| SpringWeb
+    Parent -.->|"manages versions"| Json
+    Parent -.->|"manages versions"| Mail
+</div>
+<h3 id="dependency-summary">Dependency Summary</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Category</th><th>Count</th><th>Key Libraries</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>Web Frameworks</td><td>4</td><td>Spring Boot Web, springfox-swagger2, springfox-swagger-ui</td><td>Both admin and wx APIs publish REST and Swagger UI</td></tr>
+<tr><td>Database and ORM</td><td>4</td><td>MyBatis starter, PageHelper, MySQL driver, Druid</td><td>Shared relational persistence in <code>litemall-db</code></td></tr>
+<tr><td>Security</td><td>2</td><td>Apache Shiro, java-jwt</td><td>Mixed session and token authentication model</td></tr>
+<tr><td>Messaging and External Integration</td><td>4</td><td>weixin-java-pay, weixin-java-miniapp, qcloudsms, aliyun-java-sdk-core</td><td>Payment, SMS, and cloud API integrations</td></tr>
+<tr><td>Utilities</td><td>6</td><td>guava, hibernate-validator, qiniu-java-sdk, aliyun-sdk-oss</td><td>Validation and object-storage provider SDKs</td></tr>
+<tr><td>Logging and JSON</td><td>2</td><td>spring-boot-starter-json, spring-boot-starter-mail</td><td>Core serialization and mail notification support</td></tr>
+</tbody></table></div>
+<h3 id="version-compatibility-risks">Version & Compatibility Risks</h3>
+<p>The stack is anchored to Spring Boot 2.1.5 and older springfox releases, which are significantly behind current supported versions and may face Java 17 plus compatibility constraints. Legacy testing dependencies such as Mockito 1.x and PowerMock 1.6.x also indicate older test infrastructure that can complicate framework upgrades.</p>
+<h3 id="notable-observations">Notable Observations</h3>
+<ul>
+<li>The root <code>pom.xml</code> centralizes many dependency versions while module poms often inherit versions implicitly.</li>
+<li>Multiple cloud storage SDKs are included concurrently (COS, OSS, Qiniu), increasing transitive dependency surface.</li>
+<li>Both session-oriented security (Shiro) and token-oriented security (JWT) are used in different API modules.</li>
+<li>Custom MyBatis generator plugin usage in <code>litemall-db</code> suggests generated mapper model churn is part of normal development.</li>
+</ul>
+<h2 id="test-dependencies">Test Dependencies</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Framework</th><th>Version</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>spring-boot-starter-test</td><td>inherited from parent</td><td>Base Spring testing support</td></tr>
+<tr><td>powermock-api-mockito</td><td>1.6.6</td><td>Legacy static mocking approach</td></tr>
+<tr><td>powermock-module-junit4</td><td>1.6.6</td><td>JUnit4 runner integration for PowerMock</td></tr>
+<tr><td>mockito-core</td><td>1.10.19</td><td>Older Mockito generation</td></tr>
+</tbody></table></div>
+<p>Total test-scope dependencies: 4</p>
+<p>The project has explicit test libraries, but the stack is legacy and may require modernization before moving to newer Java and Spring testing practices.</p></div>
+</div>
+<div id="tab-data" class="tab-panel">
+  <div class="fact-content"><h1 id="data-architecture-persistence-layer">Data Architecture & Persistence Layer</h1>
+<p>The application uses a shared relational data layer centered on MySQL with MyBatis mapper and service abstractions, covering roughly 34 domain entities in <code>litemall-db</code>.</p>
+<h2 id="database-configuration">Database Configuration</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service or Module</th><th>DB Type</th><th>Profile</th><th>Driver</th><th>Connection</th><th>Migration Tool</th>
+</tr></thead><tbody>
+<tr><td>litemall-db</td><td>MySQL</td><td><code>db</code></td><td><code>com.mysql.cj.jdbc.Driver</code></td><td>JDBC URL to <code>localhost:3306/litemall</code> via Druid pool</td><td>SQL scripts under <code>litemall-db/sql</code></td></tr>
+<tr><td>litemall-admin-api</td><td>MySQL via shared db module</td><td><code>db,core,admin</code></td><td>inherited from db module</td><td>Uses shared <code>litemall-db</code> datasource wiring</td><td>None detected</td></tr>
+<tr><td>litemall-wx-api</td><td>MySQL via shared db module</td><td><code>db,core,wx</code></td><td>inherited from db module</td><td>Uses shared <code>litemall-db</code> datasource wiring</td><td>None detected</td></tr>
+<tr><td>docker deployment</td><td>MySQL 5.7 container</td><td>docker-compose</td><td>mysql image builtin driver</td><td>Internal compose network plus <code>3306</code> mapping</td><td>Init scripts mounted at <code>/docker-entrypoint-initdb.d</code></td></tr>
+</tbody></table></div>
+<h2 id="data-ownership-per-service">Data Ownership per Service</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Tables Owned</th><th>ORM Framework</th><th>Caching</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>litemall-db</td><td>All core business tables (<code>litemall_order</code>, <code>litemall_goods</code>, <code>litemall_user</code>, <code>litemall_cart</code>, etc.)</td><td>MyBatis with generated mappers</td><td>None at persistence layer</td><td>Central ownership of schema and mapper classes</td></tr>
+<tr><td>litemall-wx-api</td><td>No separate tables; orchestrates shared tables through db services</td><td>Delegates to <code>litemall-db</code> services</td><td>Home and catalog in-process cache helper</td><td>Customer workflows consume shared order and catalog data</td></tr>
+<tr><td>litemall-admin-api</td><td>No separate tables; operates shared tables through db services</td><td>Delegates to <code>litemall-db</code> services</td><td>None specific</td><td>Admin workflows manage same records</td></tr>
+<tr><td>litemall-core</td><td>No direct table ownership</td><td>Service utilities</td><td>None</td><td>Integrates external payment, notify, and storage</td></tr>
+</tbody></table></div>
+<h2 id="entity-model">Entity Model</h2>
+<div class="mermaid">
+erDiagram
+    LitemallUser ||--o{ LitemallAddress : "owns"
+    LitemallUser ||--o{ LitemallOrder : "places"
+    LitemallOrder ||--o{ LitemallOrderGoods : "contains"
+    LitemallOrder ||--o{ LitemallAftersale : "creates"
+    LitemallGoods ||--o{ LitemallGoodsProduct : "has"
+    LitemallGoods ||--o{ LitemallGoodsAttribute : "describes"
+    LitemallGoods ||--o{ LitemallGoodsSpecification : "specifies"
+    LitemallCategory ||--o{ LitemallGoods : "classifies"
+    LitemallBrand ||--o{ LitemallGoods : "brands"
+    LitemallUser ||--o{ LitemallCart : "adds"
+    LitemallGoodsProduct ||--o{ LitemallCart : "selected"
+    LitemallCoupon ||--o{ LitemallCouponUser : "assigned"
+    LitemallUser ||--o{ LitemallCouponUser : "receives"
+
+    LitemallUser {
+        int id PK
+        string username
+        string mobile
+        string nickname
+    }
+    LitemallAddress {
+        int id PK
+        int userId FK
+        string name
+        string mobile
+    }
+    LitemallOrder {
+        int id PK
+        int userId FK
+        string orderSn
+        decimal actualPrice
+    }
+    LitemallOrderGoods {
+        int id PK
+        int orderId FK
+        int goodsId FK
+        int productId FK
+    }
+    LitemallGoods {
+        int id PK
+        int categoryId FK
+        int brandId FK
+        string name
+    }
+    LitemallGoodsProduct {
+        int id PK
+        int goodsId FK
+        string specifications
+        int number
+    }
+    LitemallCart {
+        int id PK
+        int userId FK
+        int goodsId FK
+        int productId FK
+    }
+    LitemallCouponUser {
+        int id PK
+        int couponId FK
+        int userId FK
+        int orderId FK
+    }
+</div>
+<h2 id="key-repository-methods">Key Repository Methods</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Service</th><th>Repository</th><th>Notable Methods</th><th>Purpose</th>
+</tr></thead><tbody>
+<tr><td>litemall-db</td><td><code>LitemallOrderService</code> (<code>LitemallOrderMapper</code>, <code>OrderMapper</code>)</td><td><code>updateWithOptimisticLocker</code>, <code>queryUnpaid</code>, <code>queryUnconfirm</code>, <code>queryVoSelective</code></td><td>Maintains order lifecycle transitions and custom admin reporting queries</td></tr>
+<tr><td>litemall-db</td><td><code>LitemallCartService</code> (<code>LitemallCartMapper</code>)</td><td><code>queryExist</code>, <code>queryByUidAndChecked</code>, <code>updateCheck</code>, <code>updateProduct</code></td><td>Supports checkout cart validation and batch state updates</td></tr>
+<tr><td>litemall-db</td><td><code>LitemallGoodsService</code> (<code>LitemallGoodsMapper</code>)</td><td><code>querySelective</code>, <code>queryByHot</code>, <code>queryByNew</code>, <code>getCatIds</code></td><td>Provides catalog filtering and home-page product projections</td></tr>
+<tr><td>litemall-db</td><td><code>LitemallCouponService</code> (<code>LitemallCouponMapper</code>)</td><td><code>queryAvailableList</code>, <code>findByCode</code>, <code>queryExpired</code></td><td>Coupon eligibility and lifecycle operations</td></tr>
+<tr><td>litemall-db</td><td><code>LitemallUserService</code> (<code>LitemallUserMapper</code>)</td><td><code>queryByUsername</code>, <code>queryByMobile</code>, <code>queryByOpenid</code></td><td>Identity lookups for login and registration constraints</td></tr>
+</tbody></table></div>
+<h2 id="caching-strategy">Caching Strategy</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Area</th><th>Provider</th><th>Pattern</th><th>TTL or Expiry</th><th>Notes</th>
+</tr></thead><tbody>
+<tr><td>wx home and catalog API responses</td><td>In-process <code>ConcurrentHashMap</code> (<code>HomeCacheManager</code>)</td><td>Cache-aside</td><td>10 minutes when enabled</td><td>Controlled by static <code>ENABLE</code> flag (default false)</td></tr>
+<tr><td>Database entities and queries</td><td>None explicit</td><td>Direct query per request</td><td>N/A</td><td>No Redis, EhCache, or second-level ORM cache detected</td></tr>
+</tbody></table></div>
+<h2 id="data-ownership-boundaries">Data Ownership Boundaries</h2>
+<p>The system uses a shared database model where both admin and wx modules read and mutate the same tables through the <code>litemall-db</code> service layer. Cross-module data access is in-process service invocation instead of REST between modules, and there is no database-per-service isolation or CQRS split. Write-heavy order workflows are wrapped in transactions in API service methods, while reporting and list endpoints are mostly read-only query paths.</p>
+<h3 id="data-classification-sensitivity">Data Classification & Sensitivity</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Entity</th><th>Sensitive Fields</th><th>Classification</th><th>Controls in Place</th>
+</tr></thead><tbody>
+<tr><td><code>LitemallUser</code></td><td>mobile, nickname, avatar</td><td>PII</td><td>Application-level auth checks; no explicit field encryption or masking in model layer</td></tr>
+<tr><td><code>LitemallAddress</code></td><td>name, mobile, detailedAddress</td><td>PII</td><td>Access tied to userId in service queries; no explicit masking or encryption-at-rest config found</td></tr>
+<tr><td><code>LitemallOrder</code></td><td>consignee, mobile, address, order amounts</td><td>PII</td><td>Business auth and order ownership checks; no explicit field-level cryptography detected</td></tr>
+<tr><td><code>LitemallAdmin</code></td><td>username, password hash</td><td>Sensitive credentials</td><td>Password hashing exists in auth flows; no dedicated secrets vault integration in persistence code</td></tr>
+<tr><td><code>LitemallCouponUser</code></td><td>user linkage and order linkage</td><td>Internal</td><td>Standard row-level linkage only</td></tr>
+</tbody></table></div>
+<p>No PHI or PCI data model with card-number storage was detected in entity classes; payment processing is delegated to external providers.</p></div>
+</div>
+<p class="footer">Your feedback is invaluable &mdash; <a href="https://aka.ms/ghcp-appmod/feedback">Share feedback</a></p>
+<script>
+function toggleRow(rowId, triggerRow) {
+  var detail = document.getElementById(rowId);
+  var btn = document.getElementById('btn-' + rowId);
+  if (!detail) return;
+  var visible = detail.style.display !== 'none';
+  detail.style.display = visible ? 'none' : 'table-row';
+  if (btn) btn.classList.toggle('open', !visible);
+}
+(function() {
+  var nav = document.querySelector('.tab-nav');
+  if (!nav) return;
+  nav.addEventListener('click', function(e) {
+    var btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    var targetId = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    var panel = document.getElementById(targetId);
+    if (panel) {
+      panel.classList.add('active');
+      if (window.__mermaidReady) { window.__renderMermaidIn(panel); }
+    }
+  });
+})();
+
+// ── Diagram lightbox ────────────────────────────────────────
+(function() {
+  var lightbox = document.getElementById('diagram-lightbox');
+  var inner = document.getElementById('diagram-lightbox-inner');
+  var closeBtn = document.getElementById('diagram-lightbox-close');
+  if (!lightbox || !inner || !closeBtn) return;
+
+  var scale = 1;
+  var translateX = 0;
+  var translateY = 0;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+
+  function applyTransform() {
+    var svg = inner.querySelector('svg');
+    if (svg) {
+      svg.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale + ')';
+      svg.style.transformOrigin = 'center center';
+      svg.style.transition = 'none';
+    }
+  }
+
+  function resetTransform() {
+    scale = 1; translateX = 0; translateY = 0;
+    applyTransform();
+  }
+
+  function openLightbox(svgEl) {
+    inner.innerHTML = svgEl.outerHTML;
+    var injected = inner.querySelector('svg');
+    if (injected) {
+      injected.removeAttribute('width');
+      injected.removeAttribute('height');
+      injected.style.cursor = 'grab';
+    }
+    resetTransform();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    inner.innerHTML = '';
+    document.body.style.overflow = '';
+    resetTransform();
+  }
+
+  inner.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? 0.9 : 1.1;
+    scale = Math.min(Math.max(scale * delta, 0.3), 8);
+    applyTransform();
+  }, { passive: false });
+
+  inner.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    isDragging = true;
+    dragStartX = e.clientX - translateX;
+    dragStartY = e.clientY - translateY;
+    var svg = inner.querySelector('svg');
+    if (svg) { svg.style.cursor = 'grabbing'; }
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    translateX = e.clientX - dragStartX;
+    translateY = e.clientY - dragStartY;
+    applyTransform();
+  });
+
+  document.addEventListener('mouseup', function() {
+    if (!isDragging) return;
+    isDragging = false;
+    var svg = inner.querySelector('svg');
+    if (svg) { svg.style.cursor = 'grab'; }
+  });
+
+  inner.addEventListener('dblclick', function() { resetTransform(); });
+
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.mermaid');
+    if (!card) return;
+    if (e.target.closest('.diagram-lightbox-close')) return;
+    var svg = card.querySelector('svg');
+    if (svg) { openLightbox(svg); }
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) { closeLightbox(); }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeLightbox(); }
+  });
+})();
+
+var _currentTarget = '';
+
+function toggleMultiSelect(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  document.querySelectorAll('.multi-select.open').forEach(function(ms) { if (ms.id !== id) ms.classList.remove('open'); });
+  el.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.multi-select')) {
+    document.querySelectorAll('.multi-select.open').forEach(function(ms) { ms.classList.remove('open'); });
+  }
+});
+
+function getMultiSelectValues(msId) {
+  var el = document.getElementById(msId);
+  if (!el) return [];
+  var checked = el.querySelectorAll('input[type=checkbox]:checked');
+  var vals = [];
+  for (var i = 0; i < checked.length; i++) vals.push(checked[i].value);
+  return vals;
+}
+
+function onMultiSelectChange(msId, label) {
+  var el = document.getElementById(msId);
+  if (!el) return;
+  var vals = getMultiSelectValues(msId);
+  var total = el.querySelectorAll('input[type=checkbox]').length;
+  var btn = el.querySelector('.multi-select-btn');
+  if (btn) {
+    btn.textContent = vals.length > 0 && vals.length < total ? label + ' (' + vals.length + ')' : label;
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  var selectedDomains = getMultiSelectValues('domain-ms');
+  var selectedCrits = getMultiSelectValues('criticality-ms');
+
+  var sections = document.querySelectorAll('.issue-section');
+  for (var i = 0; i < sections.length; i++) {
+    var domain = sections[i].getAttribute('data-domain');
+    sections[i].style.display = (selectedDomains.length === 0 || selectedDomains.indexOf(domain) >= 0) ? '' : 'none';
+  }
+
+  var rows = document.querySelectorAll('.issue-row');
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var section = row.closest('.issue-section');
+    if (section && section.style.display === 'none') {
+      row.style.display = 'none';
+      var next = row.nextElementSibling;
+      if (next && next.classList.contains('detail-row')) next.style.display = 'none';
+      continue;
+    }
+
+    var show = true;
+    if (_currentTarget && row.hasAttribute('data-targets')) {
+      var targetsStr = row.getAttribute('data-targets');
+      if (targetsStr && targetsStr !== '{}') {
+        try {
+          var targets = JSON.parse(targetsStr);
+          if (Object.keys(targets).length > 0 && !targets[_currentTarget]) {
+            show = false;
+          }
+        } catch(e) {}
+      }
+    }
+
+    if (show && selectedCrits.length > 0) {
+      var crit = row.getAttribute('data-criticality');
+      if (selectedCrits.indexOf(crit) < 0) show = false;
+    }
+
+    row.style.display = show ? '' : 'none';
+    var nextRow = row.nextElementSibling;
+    if (nextRow && nextRow.classList.contains('detail-row')) {
+      if (!show) nextRow.style.display = 'none';
+    }
+  }
+}
+
+function clearAllFilters() {
+  document.querySelectorAll('.multi-select input[type=checkbox]').forEach(function(cb) { cb.checked = false; });
+  var domainBtn = document.querySelector('#domain-ms .multi-select-btn');
+  if (domainBtn) domainBtn.textContent = 'Domain';
+  var critBtn = document.querySelector('#criticality-ms .multi-select-btn');
+  if (critBtn) critBtn.textContent = 'Criticality';
+  applyFilters();
+}
+
+function onTargetChange(targetId) {
+  _currentTarget = targetId;
+  var rows = document.querySelectorAll('.issue-row[data-targets]');
+  var totalEffort = 0;
+  var domainCrits = {};
+
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var targets = JSON.parse(row.getAttribute('data-targets'));
+    var section = row.closest('.issue-section');
+    var domain = section ? section.getAttribute('data-domain') : '';
+
+    if (!targets || Object.keys(targets).length === 0) {
+      var sp = parseFloat(row.querySelector('.sp-cell').textContent) || 0;
+      totalEffort += sp;
+      if (!domainCrits[domain]) domainCrits[domain] = {mandatory:0,potential:0,optional:0};
+      var crit = row.getAttribute('data-criticality') || 'optional';
+      domainCrits[domain][crit] = (domainCrits[domain][crit] || 0) + 1;
+      continue;
+    }
+
+    var override = targets[targetId];
+    if (!override) {
+      continue;
+    }
+
+    var newSeverity = (override.severity || row.getAttribute('data-default-severity') || '').toLowerCase();
+    row.setAttribute('data-criticality', newSeverity);
+    var critCell = row.querySelector('.crit-cell');
+    if (critCell) {
+      var critText = newSeverity === 'mandatory' ? 'Mandatory' : newSeverity === 'potential' ? 'Potential' : 'Optional';
+      var cssClass = newSeverity === 'mandatory' ? 'crit-square-mandatory' : newSeverity === 'potential' ? 'crit-square-potential' : 'crit-square-optional';
+      critCell.innerHTML = '<span class="crit-label"><span class="crit-square ' + cssClass + '"></span>' + critText + '</span>';
+    }
+
+    var newEffort = override.effort !== undefined ? override.effort : parseFloat(row.getAttribute('data-default-effort')) || 0;
+    var spCell = row.querySelector('.sp-cell');
+    if (spCell) spCell.textContent = newEffort;
+    totalEffort += newEffort;
+
+    if (!domainCrits[domain]) domainCrits[domain] = {mandatory:0,potential:0,optional:0};
+    domainCrits[domain][newSeverity] = (domainCrits[domain][newSeverity] || 0) + 1;
+  }
+
+  var secSection = document.querySelector('.issue-section[data-domain="security"]');
+  if (secSection) {
+    var secRows = secSection.querySelectorAll('.issue-row');
+    for (var j = 0; j < secRows.length; j++) {
+      if (!secRows[j].hasAttribute('data-targets') || secRows[j].getAttribute('data-targets') === '') {
+        var sp = parseFloat(secRows[j].querySelector('.sp-cell').textContent) || 0;
+        totalEffort += sp;
+        if (!domainCrits['security']) domainCrits['security'] = {mandatory:0,potential:0,optional:0};
+        var sc = secRows[j].getAttribute('data-criticality') || 'optional';
+        domainCrits['security'][sc] = (domainCrits['security'][sc] || 0) + 1;
+      }
+    }
+  }
+
+  var label = totalEffort < 20 ? 'S' : totalEffort < 50 ? 'M' : totalEffort < 100 ? 'L' : 'XL';
+  var effortEl = document.getElementById('effort-display');
+  if (effortEl) effortEl.textContent = label + ' (total story points: ' + totalEffort + ')';
+
+  updateDonuts(domainCrits);
+  applyFilters();
+}
+
+function updateDonuts(domainCrits) {
+  var container = document.getElementById('donut-container');
+  if (!container) return;
+  container.innerHTML = '';
+  var domainNames = {'cloud-readiness':'Cloud Readiness','java-upgrade':'Java Upgrade','dotnet-upgrade':'DotNET Upgrade','security':'Security'};
+  var domainOrder = ['cloud-readiness','java-upgrade','dotnet-upgrade','security'];
+  for (var d = 0; d < domainOrder.length; d++) {
+    var key = domainOrder[d];
+    var c = domainCrits[key];
+    if (!c || (c.mandatory + c.potential + c.optional) === 0) continue;
+    var total = c.mandatory + c.potential + c.optional;
+    var div = document.createElement('div');
+    div.className = 'domain-summary-item';
+    div.innerHTML = buildDonutSvg(c.mandatory, c.potential, c.optional) +
+      '<h3>' + domainNames[key] + '</h3>' +
+      '<div class="count">' + total + ' issue' + (total !== 1 ? 's' : '') + '</div>';
+    container.appendChild(div);
+  }
+}
+
+function buildDonutSvg(m, p, o) {
+  var total = m + p + o;
+  if (total === 0) return '<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;"><circle cx="50" cy="50" r="35" fill="none" stroke="#d0d7de" stroke-width="15" opacity="0.5"/></svg>';
+  var r = 35, circ = 2 * Math.PI * r, offset = 0;
+  var svg = '<svg viewBox="0 0 100 100" width="100" height="100" style="display:block;margin:0 auto;transform:rotate(-90deg);">';
+  var segs = [{c:m,color:'var(--color-mandatory)'},{c:p,color:'var(--color-potential)'},{c:o,color:'var(--color-optional)'}];
+  for (var i = 0; i < segs.length; i++) {
+    if (segs[i].c === 0) continue;
+    var segLen = (segs[i].c / total) * circ;
+    var gap = total > segs[i].c ? 1.5 : 0;
+    var drawLen = Math.max(segLen - gap, 0.5);
+    svg += '<circle cx="50" cy="50" r="' + r + '" fill="none" stroke="' + segs[i].color + '" stroke-width="15" stroke-dasharray="' + drawLen.toFixed(2) + ' ' + circ.toFixed(2) + '" stroke-dashoffset="' + (-offset).toFixed(2) + '"/>';
+    offset += segLen;
+  }
+  svg += '</svg>';
+  return svg;
+}
+</script>
+<script>document.addEventListener('DOMContentLoaded', function() { onTargetChange('azure-aks'); });</script>
+</div></body></html>

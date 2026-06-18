@@ -1,0 +1,4695 @@
+{
+  "version": "1.0.0",
+  "producer": "Java AppCAT CLI",
+  "metadata": {
+    "analysisStartTime": "2026-06-18T00:16:49.58307133Z",
+    "analysisEndTime": "2026-06-18T00:19:44.515661446Z",
+    "status": "Complete",
+    "privacyMode": "Protected",
+    "privacyModeHelpUrl": "https://aka.ms/appcat-privacy-mode",
+    "targetIds": [
+      "azure-aks"
+    ],
+    "targetDisplayNames": [
+      "Azure Kubernetes Service"
+    ],
+    "capabilities": [
+      "openjdk25"
+    ],
+    "os": [
+      "linux",
+      "windows"
+    ],
+    "domains": [
+      "java-upgrade",
+      "cloud-readiness"
+    ],
+    "mode": "full",
+    "minimumCveSeverity": "high"
+  },
+  "summary": {
+    "totalProjects": 1,
+    "totalIssues": 25,
+    "totalIncidents": 149,
+    "totalEffort": 470,
+    "charts": {
+      "severity": {
+        "mandatory": 108,
+        "optional": 16,
+        "potential": 25,
+        "information": 0
+      },
+      "category": {
+        "database-migration": 5,
+        "default-encoding": 8,
+        "deprecated-apis": 41,
+        "file-system-management": 17,
+        "hardcoded-credential": 11,
+        "insecure-random": 7,
+        "java-native-code": 2,
+        "java-version-upgrade": 3,
+        "local-credential": 6,
+        "local-resource-access": 2,
+        "logging-management": 14,
+        "remote-communication": 30,
+        "session-management": 2,
+        "weak-cryptography": 1
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": ".",
+      "issues": 25,
+      "storyPoints": 470,
+      "properties": {
+        "appName": "litemall",
+        "jdkVersion": "1.8",
+        "frameworks": [
+          "Spring Boot",
+          "Spring",
+          "Vue"
+        ],
+        "languages": [
+          "Java",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "tools": [
+          "Maven",
+          "NodeJs"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "azure-java-version-01000",
+          "incidentId": "4036bb92-6c88-4ffb-a8b8-8a755f3a2400",
+          "location": "pom.xml",
+          "locationKind": "File",
+          "line": 18,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-java-version-01000",
+          "incidentId": "21c59ca7-260a-4ba2-96df-6a4eaa70014b",
+          "location": "pom.xml",
+          "locationKind": "File",
+          "line": 240,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-java-version-01000",
+          "incidentId": "7e5519f5-9bc8-4da1-a3dd-fc9ef90c35a3",
+          "location": "pom.xml",
+          "locationKind": "File",
+          "line": 241,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-database-mysql-01000",
+          "incidentId": "4cce5864-233a-4b85-afd8-fd767c81c289",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-database-mysql-01000",
+          "incidentId": "b7f64d55-ddbb-4c63-9e0d-295851b0d3c8",
+          "location": "litemall-db/mybatis-generator/generatorConfig.xml",
+          "locationKind": "File",
+          "line": 46,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-database-mysql-01000",
+          "incidentId": "3e0cd9b1-1985-4fe9-a798-df56dd7db841",
+          "location": "litemall-db/src/main/resources/application-db.yml",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-database-mysql-01000",
+          "incidentId": "34070c87-d367-41f3-b442-3b9070cffb22",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-database-mysql-01000",
+          "incidentId": "4ae40f38-8e90-40ff-bf9f-155a1e4ed9a4",
+          "location": "",
+          "locationKind": "",
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "d654dee1-ffcd-4a01-aa75-fd53b7984938",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "f5e88191-8d5f-4a78-bafd-28a41131676b",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 56,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "94280e05-caaf-42fc-94c6-ab46cd3b5f37",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 24,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "6a331bf3-b609-42fc-a973-24b65d85f283",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "d16fa11e-7bbd-4158-a1b2-c417ca11ba7a",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 56,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "azure-password-01000",
+          "incidentId": "a8468f2c-ec4b-4bab-b0ab-12e9c01d1859",
+          "location": "litemall-db/src/main/resources/application-db.yml",
+          "locationKind": "File",
+          "line": 13,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=azure/springboot"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00001",
+          "incidentId": "03652abe-7684-4b8e-8e67-030a7ededd08",
+          "location": "litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/job/DbJob.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00001",
+          "incidentId": "fe82052d-8fc6-40b7-a8e6-087430eb11c2",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java",
+          "locationKind": "File",
+          "line": 6,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "fdf6c3f6-ee35-429e-94d7-094d9884558f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java",
+          "locationKind": "File",
+          "line": 15,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "cb3abf09-a7fc-4851-890e-208498f061ce",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java",
+          "locationKind": "File",
+          "line": 12,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "a4ef41f7-1299-4d4e-bc81-1ddda4efc08a",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java",
+          "locationKind": "File",
+          "line": 15,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "7f3fc89a-c2a2-4cb2-a73d-8b97424b770b",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java",
+          "locationKind": "File",
+          "line": 14,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "326804bb-3549-4654-818a-26f4f04c6995",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java",
+          "locationKind": "File",
+          "line": 13,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "40982a16-1afc-48ff-9c55-b51f96983f1a",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java",
+          "locationKind": "File",
+          "line": 16,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "9e9f36ba-308b-4e09-9d73-abfe342fe479",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/Storage.java",
+          "locationKind": "File",
+          "line": 6,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "8a875afb-bb34-44de-9269-fc54439ad81f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/StorageService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "d16f9429-df71-4024-a7b2-88febba3cb40",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java",
+          "locationKind": "File",
+          "line": 18,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00005",
+          "incidentId": "9bcbe4dc-8539-4eb6-bf83-7fd02a8df230",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/LocalStorage.java",
+          "locationKind": "File",
+          "line": 38,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "session-00001",
+          "incidentId": "c0f64267-88de-4bb6-bdda-32baef0b1a29",
+          "location": "litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java",
+          "locationKind": "File",
+          "line": 72,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "session-00001",
+          "incidentId": "e00518f8-72d0-473a-a46e-b331e1124d60",
+          "location": "litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/web/AdminAuthController.java",
+          "locationKind": "File",
+          "line": 31,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "localhost-jdbc-00002",
+          "incidentId": "5819da03-1820-4dc5-861b-63c7647c4537",
+          "location": "litemall-db/mybatis-generator/generatorConfig.xml",
+          "locationKind": "File",
+          "line": 46,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-weak-crypto-md5-01000",
+          "incidentId": "1704a040-f88a-47b3-bbc7-447677551d0b",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java",
+          "locationKind": "File",
+          "line": 112,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-password-01000",
+          "incidentId": "5a20df72-5016-41cd-a4df-05cce5cd2be8",
+          "location": "litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java",
+          "locationKind": "File",
+          "line": 16,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-password-01000",
+          "incidentId": "5497cb15-815c-4056-b4af-c9314c723752",
+          "location": "litemall-admin-api/src/test/java/org/linlinjava/litemall/admin/BcryptTest.java",
+          "locationKind": "File",
+          "line": 21,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "jni-native-code-00001",
+          "incidentId": "b4d83fca-a552-45fa-b48a-d3ecffb7630e",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 14,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "jni-native-code-00001",
+          "incidentId": "67ce9be6-0b88-41bf-88c2-5e82445fe945",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 35,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 8,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 8,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "f77fd8e0-ff81-4318-b743-119c36fa216e",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 16,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "81f6d30b-275c-495e-9dba-756deffb490a",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 17,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "02636871-1937-4803-9463-82ea5cb1d92a",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 23,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "67368e7c-4346-46f7-93ba-a6dd9bba6a39",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 28,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "38240912-b225-42fc-b194-e2f8581d1197",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 29,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "d87f16a8-814d-4910-815c-d83cad3e9a15",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 35,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "e896d9b6-a8f8-4028-94cc-89edd212be9b",
+          "location": "litemall-all-war/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 48,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "b12e8e5c-5b9f-4511-a109-0dbdd8784992",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 16,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "271ceaac-e75a-487e-addc-22507b1ecde9",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 17,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "3986d93d-89ea-4deb-97b6-ee33091961a9",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 23,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "f6c2ed5b-7a6a-4bf8-b5e0-59b3e1c9844d",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 28,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "799b27b5-4b77-4304-96f6-7a3ac084bc9f",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 29,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "9dd90c0f-dfab-4a00-97ac-b35b3bf0b5fe",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 35,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "logging-0002",
+          "incidentId": "da639f79-56f4-4022-afcd-d4c33e9d5086",
+          "location": "litemall-all/src/main/resources/logback-spring.xml",
+          "locationKind": "File",
+          "line": 48,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 1,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 1,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "db6a14d0-61a9-4387-bf88-b9f4f0f7fadd",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java",
+          "locationKind": "File",
+          "line": 51,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "e3e89077-fef5-40d1-b1df-77f2227372be",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java",
+          "locationKind": "File",
+          "line": 9,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "59895ac0-e3bd-48a3-9c0c-4a30c21610fe",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java",
+          "locationKind": "File",
+          "line": 20,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "2e69b5f4-5462-421b-96c0-3f77f307076d",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponService.java",
+          "locationKind": "File",
+          "line": 149,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "93e33ae1-a12b-431e-b634-696f8b5be567",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java",
+          "locationKind": "File",
+          "line": 77,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "30054fd0-4cb4-4033-86a8-b5c312dd3264",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/CharUtil.java",
+          "locationKind": "File",
+          "line": 3,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-insecure-random-01000",
+          "incidentId": "27235738-833f-4e1f-900a-a6836931ad49",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java",
+          "locationKind": "File",
+          "line": 15,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-default-pwd-04000",
+          "incidentId": "1978f721-ddbe-469e-ade3-9eb219c537f5",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyProperties.java",
+          "locationKind": "File",
+          "line": 67,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-default-pwd-04000",
+          "incidentId": "762acf02-172f-4285-bc01-6010cdef7b9c",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallAdmin.java",
+          "locationKind": "File",
+          "line": 183,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-default-pwd-04000",
+          "incidentId": "b9eb11c3-5b48-4b5f-9835-c32dd81cf46b",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/domain/LitemallUser.java",
+          "locationKind": "File",
+          "line": 247,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "0f2b9cef-b59d-42d9-b625-f8cbb7950cf4",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 137,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "395e1712-cc65-4169-8232-fbd2c17bebfc",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 144,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "3dfd9044-ba03-475d-b03e-8ca9bbe7a35b",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 137,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "71d6c5e4-25e7-4f03-9daa-aaa1310ca9fc",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 144,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "37c8f80b-d097-4aaf-941c-1b7684904c9e",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 105,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "cra-hardcoded-credential-config-03000",
+          "incidentId": "119b8f7b-b004-4396-b92d-69ca570c88ac",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 112,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00002",
+          "incidentId": "75df4c9a-dba0-432a-8593-2e786e479706",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java",
+          "locationKind": "File",
+          "line": 111,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00002",
+          "incidentId": "c19aa77d-a316-4053-ad36-0eb3b07b874d",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java",
+          "locationKind": "File",
+          "line": 109,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00002",
+          "incidentId": "779749a6-71d4-4ecf-a92f-62253a4251f0",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java",
+          "locationKind": "File",
+          "line": 96,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00002",
+          "incidentId": "000b3dd3-4b14-49b7-bc9c-3750363fdf43",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java",
+          "locationKind": "File",
+          "line": 112,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "local-storage-00002",
+          "incidentId": "6036bbd2-0cb5-494f-9cc7-d8b0be7748fa",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java",
+          "locationKind": "File",
+          "line": 36,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "db79fbd4-0db9-44bb-982f-c5ec317f0ed4",
+          "location": "litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java",
+          "locationKind": "File",
+          "line": 42,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "dbf489f6-444d-4fdd-ac22-e5875eee834f",
+          "location": "litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/config/WxSwagger2Configuration.java",
+          "locationKind": "File",
+          "line": 43,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "ca55db46-8cf1-4364-9f5d-dbd71dec7e7f",
+          "location": "litemall-wx-api/src/main/java/org/linlinjava/litemall/wx/web/WxAuthController.java",
+          "locationKind": "File",
+          "line": 301,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "5a14dc4d-6cc4-4579-8c62-c9e78754d621",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java",
+          "locationKind": "File",
+          "line": 26,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "b9088a25-8b02-453e-a610-563127db5939",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 44,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "f9b58da4-bba6-4e07-8427-865615595a25",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 126,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "909e81ac-6394-41c8-9c42-12ebabce185d",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 142,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "a2576d68-e058-41f2-91d3-e279fdc3c714",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 44,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "2bf8f96c-bda6-47de-b1a0-de977e42a060",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 126,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "62d325da-030e-48bc-a219-c9fc56f5a184",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 142,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "274ceeb6-e4a5-44c5-8b49-67edec6c83aa",
+          "location": "litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java",
+          "locationKind": "File",
+          "line": 43,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "be8e5849-8cff-4159-9ec1-ba379ac9fba1",
+          "location": "litemall-admin-api/src/main/java/org/linlinjava/litemall/admin/config/AdminSwagger2Configuration.java",
+          "locationKind": "File",
+          "line": 44,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "560f02d6-06f2-49f2-ba47-b2d3e1839fda",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "18890d61-780b-416c-834e-99da2a84c3dc",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 94,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-urls-00001",
+          "incidentId": "eca4c23e-ae40-484b-8488-146a642bdc7f",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 110,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "mail-00000",
+          "incidentId": "362159d9-c662-4cb9-8acf-8f0fd5b3d890",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java",
+          "locationKind": "File",
+          "line": 4,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "mail-00000",
+          "incidentId": "e8e5eea0-0eae-46fc-97e4-344bd237abca",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/notify/NotifyService.java",
+          "locationKind": "File",
+          "line": 3,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "mail-00000",
+          "incidentId": "2253fe8c-12a4-4ca5-8631-2fdefbfc58d4",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "mail-00000",
+          "incidentId": "679a870b-47a5-4104-8043-4a0fb060c23f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/notify/config/NotifyAutoConfiguration.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "24540c7c-d55d-494e-a7dd-773a979f829e",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 44,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "76592305-7a14-44e9-8153-011696111aca",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 126,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "53933c8b-06db-4dc7-b407-b2600f232314",
+          "location": "deploy/litemall/application.yml",
+          "locationKind": "File",
+          "line": 142,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "f6cb5868-7424-4bb7-94fa-99a81c17f61f",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 44,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "56685b54-5173-4591-a688-9f94a2e97f27",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 126,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "f4682527-10f1-43c7-8d83-b9a2edfb3992",
+          "location": "docker/litemall/application.yml",
+          "locationKind": "File",
+          "line": 142,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "5d481233-f7e8-4084-be39-b7fb669390e4",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "0fbd7513-d0e6-453e-bea9-2c026b022e02",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 94,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "65b427fb-f8f8-4553-9765-d44ebbac32dd",
+          "location": "litemall-core/src/main/resources/application-core.yml",
+          "locationKind": "File",
+          "line": 110,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "unsecure-network-protocol-00000",
+          "incidentId": "79eac396-2070-4f21-963b-9122e831d964",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java",
+          "locationKind": "File",
+          "line": 26,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "localhost-00004",
+          "incidentId": "184b5b8d-a660-4381-a7a8-77416fcf1f1f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java",
+          "locationKind": "File",
+          "line": 29,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=cloud-readiness"
+          ]
+        },
+        {
+          "ruleId": "hardcoded-ip-address",
+          "incidentId": "a131e7fb-3783-4238-b8b9-4b5a252a6c20",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/IpUtil.java",
+          "locationKind": "File",
+          "line": 29,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=discovery-rules"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "c984dc79-821d-4678-8472-a28a7aee51a8",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/system/SystemInistService.java",
+          "locationKind": "File",
+          "line": 9,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "5afff833-6d17-4a36-af49-11278bdf2d4a",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/task/TaskService.java",
+          "locationKind": "File",
+          "line": 4,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "93df1c3a-9ecd-4cca-956e-9600757a5df3",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "c597d8df-4f16-4476-97b6-fbe3ac0b9e91",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAddressService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "13920d80-4ddb-4672-afa6-196906d4c8b5",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAdminService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "f3b3ea03-1501-473d-b1a5-0437bc249d81",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallAftersaleService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "dd0d2c84-f7e8-4efc-a82b-f0e350ddbf10",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallBrandService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "a8aff383-e8a5-4c51-acb8-caeb9eb7167c",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCartService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "0030249f-7876-43eb-abd9-d1febdff8b03",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCategoryService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "92c5fb56-c844-4e7c-86d7-ce70a46a99ac",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCollectService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "f8f0073a-3182-4531-957f-97cdd778cd06",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCommentService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "25cc8bd9-24ac-4968-a8bd-54fb2fa2cf22",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallCouponUserService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "b1e5a487-e419-41f3-8592-0e9605483d1a",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallFootprintService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "3531769b-ae07-4969-b41b-a944d2e13c7c",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsAttributeService.java",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "809dfb0e-2f6e-4b21-b1b5-184e91be5d66",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsProductService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "328684ed-b2cc-4089-8291-e508f4291075",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "6e04301d-7dae-4441-93aa-1375e6933bd1",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGoodsSpecificationService.java",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "ab3ece95-1377-4c83-8035-c0031ed406ff",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponRulesService.java",
+          "locationKind": "File",
+          "line": 13,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "f4ec1d85-b6b8-4a17-9bd1-6e1759ba0e80",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallGrouponService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "9cfb9b8e-f87c-4521-ace7-77ffa73145a8",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallIssueService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "8b2edce0-aaaa-4e0d-9eb3-6adc250f4590",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallKeywordService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "cd36afd3-2f42-4e35-b0a7-dd0d3a22bced",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallLogService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "5005bc92-a408-43ef-bd73-90214645cb58",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeAdminService.java",
+          "locationKind": "File",
+          "line": 9,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "81b7f730-91a1-4c28-a250-28dd509406eb",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallNoticeService.java",
+          "locationKind": "File",
+          "line": 12,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "7f7a2e05-b691-4794-8b53-e929f43b9c13",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderGoodsService.java",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "786822c5-3c1e-421b-b212-cd6230890767",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallOrderService.java",
+          "locationKind": "File",
+          "line": 14,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "c6b20403-0394-4623-8340-9f42784420b4",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallPermissionService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "2d127c16-951d-476c-b0c5-c1436eec206d",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRegionService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "85fb9220-11a4-4470-8823-f8faf034ee07",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallRoleService.java",
+          "locationKind": "File",
+          "line": 9,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "2b7b1a5b-9bc0-4cd8-af0f-96ef04a1b6ae",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSearchHistoryService.java",
+          "locationKind": "File",
+          "line": 10,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "10496c2b-075b-497f-97ca-a8f5098e6e91",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallSystemConfigService.java",
+          "locationKind": "File",
+          "line": 8,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "d84b5398-40fc-4ab0-8880-a2dcfbe2293f",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallTopicService.java",
+          "locationKind": "File",
+          "line": 12,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "598e9554-8347-4b4d-a116-d13cef2fc026",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/LitemallUserService.java",
+          "locationKind": "File",
+          "line": 11,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-11-deprecate-javaee-00001",
+          "incidentId": "865b02ab-df91-43b0-a268-f76c7165ed1d",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/service/StatService.java",
+          "locationKind": "File",
+          "line": 6,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk11/openjdk8"
+          ]
+        },
+        {
+          "ruleId": "java-18-deprecate-runtime-00000",
+          "incidentId": "5bd35f43-7a11-49b9-bebe-66f6577eff8e",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 14,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-18-deprecate-runtime-00000",
+          "incidentId": "be8099a3-4b28-4fa4-8e30-00809c866054",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 35,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 2,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 2,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-20-deprecate-net-00000",
+          "incidentId": "5f06ab4e-acb2-4e6a-a24d-fe172b24b282",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/qcode/QCodeService.java",
+          "locationKind": "File",
+          "line": 111,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-20-deprecate-net-00000",
+          "incidentId": "72395598-de36-437d-9c1c-a4112906c074",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/AliyunStorage.java",
+          "locationKind": "File",
+          "line": 109,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-20-deprecate-net-00000",
+          "incidentId": "631fe05f-df84-43ec-adea-1a14c8308f84",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/QiniuStorage.java",
+          "locationKind": "File",
+          "line": 96,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-20-deprecate-net-00000",
+          "incidentId": "6dd052b5-cc4b-41e2-9560-55b6614ef72f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/storage/TencentStorage.java",
+          "locationKind": "File",
+          "line": 112,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "java-20-deprecate-net-00000",
+          "incidentId": "8ed8ce00-ab38-4eb3-be71-2585155334cb",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java",
+          "locationKind": "File",
+          "line": 36,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "mandatory"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "1d8b6b85-b8cf-4dda-aff4-e637f04d1de0",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java",
+          "locationKind": "File",
+          "line": 51,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "360a6465-571c-419b-b9e6-04d11ccb554f",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/util/HttpUtil.java",
+          "locationKind": "File",
+          "line": 71,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "e28ccbaa-59d2-466e-a590-b37611dba7a5",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 16,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "b7147bdd-0690-4b40-bfa2-b59f610c208c",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 17,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "ccfa0a4a-b01d-4854-92ed-f025a0eeef2d",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 37,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00000",
+          "incidentId": "e15df790-7b4a-46b7-b219-6391679eb784",
+          "location": "litemall-db/src/main/java/org/linlinjava/litemall/db/util/DbUtil.java",
+          "locationKind": "File",
+          "line": 38,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00020",
+          "incidentId": "333b0b33-3f1e-4c5e-bca2-3985710d52e1",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java",
+          "locationKind": "File",
+          "line": 90,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        },
+        {
+          "ruleId": "utf-8-by-default-00020",
+          "incidentId": "f3134925-925a-4ab0-97fe-b63fea83ccfd",
+          "location": "litemall-core/src/main/java/org/linlinjava/litemall/core/express/ExpressService.java",
+          "locationKind": "File",
+          "line": 94,
+          "column": 0,
+          "targets": {
+            "azure-aks": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-appservice": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "azure-container-apps": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": [
+            "type=violation",
+            "ruleset=openjdk21/openjdk17"
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "azure-database-mysql-01000": {
+      "id": "azure-database-mysql-01000",
+      "description": "To migrate a Java application that uses a MySQL database to Azure, you can follow these recommendations:\n\n * Use a managed **Azure Database for MySQL**: For that create a managed MySQL database in Azure and choose the appropriate pricing tier based on your application's requirements for performance, storage, and availability.\n\n * **Migrate** the existing MySQL database: For that you can use the Azure Database Migration Service (DMS) to perform an online migration with minimal downtime.\n\n * Update the application's **database connection** details: Modify the Java application's configuration to point to the newly provisioned Azure Database for MySQL. Update the connection string, hostname, port, username, and password information accordingly.\n\n * Enable **monitoring and diagnostics**: Utilize Azure Monitor to gain insights into the performance and health of your Java application and the underlying MySQL database. Set up metrics, alerts, and log analytics to proactively identify and resolve issues.\n\n * Implement **security** measures: Apply security best practices to protect your Java application and the MySQL database. This includes implementing authentication and authorization mechanisms with passwordless connections and leveraging Microsoft Defender for Cloud for threat detection and vulnerability assessments.\n\n * **Backup** your data: Azure Database for MySQL provides automated backups by default. You can configure the retention period for backups based on your requirements. You can also enable geo-redundant backups, if needed, to enhance data durability and availability.",
+      "title": "MySQL database found",
+      "severity": "potential",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/mysql",
+          "title": "Azure Database for MySQL documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/dms",
+          "title": "Azure Database Migration Service documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor",
+          "title": "Azure Monitor documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/defender-for-cloud",
+          "title": "Microsoft Defender for Cloud"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/mysql/single-server/concepts-backup",
+          "title": "Backup and restore in Azure Database for MySQL"
+        }
+      ],
+      "labels": [
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "source",
+        "domain=cloud-readiness",
+        "category=database-migration",
+        "database",
+        "mysql",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "azure-java-version-01000": {
+      "id": "azure-java-version-01000",
+      "description": "The application is using a Java version that has reached the end of support. It is strongly recommended to plan and execute a migration strategy to upgrade your application to a supported Java version.\nSupported Java versions receive long-term support (LTS) from the Java community, including bug fixes and updates. Migrating to a supported version provides you with a stable and well-maintained platform for your application.",
+      "title": "Java Version Has Reached the End of Support",
+      "severity": "mandatory",
+      "effort": 8,
+      "labels": [
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "source",
+        "domain=java-upgrade",
+        "category=java-version-upgrade",
+        "version",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "azure-password-01000": {
+      "id": "azure-password-01000",
+      "description": "Using clear passwords in property files is a security risk, as they can be easily compromised if the files are accessed by unauthorized individuals. To enhance the security of your application, it is recommended to employ secure credential management practices.\n\n * **Azure Key Vault**: Utilize Azure Key Vault to securely store and manage your application's passwords and other sensitive credentials. Azure Key Vault provides a centralized and highly secure location for storing secrets, keys, and certificates.\n\n * **Passwordless connections**: You can provide an additional layer of security and convenience for accessing resources in Azure by eliminating the need for passwords. This way you can reduce the risk of password-related vulnerabilities, such as weak passwords or password theft.",
+      "title": "Password found in configuration file",
+      "severity": "potential",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/key-vault",
+          "title": "Azure Key Vault documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/developer/intro/passwordless-overview",
+          "title": "Passwordless connections for Azure services"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/developer/java/migration/migrate-spring-boot-to-azure-container-apps#inventory-configuration-sources-and-secrets",
+          "title": "Password found in configuration file"
+        },
+        {
+          "url": "https://docs.microsoft.com/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault",
+          "title": "Read a secret from Azure Key Vault in a Spring Boot application"
+        },
+        {
+          "url": "https://search.maven.org/artifact/com.azure.spring/azure-spring-boot-starter-keyvault-secrets",
+          "title": "Azure Spring Boot Starter for Azure Key Vault Secrets"
+        }
+      ],
+      "labels": [
+        "source",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "domain=cloud-readiness",
+        "category=local-credential",
+        "password",
+        "security",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "cra-hardcoded-credential-config-03000": {
+      "id": "cra-hardcoded-credential-config-03000",
+      "description": "**EU Cyber Resilience Act (Annex I, Part I, Section 2(b))** requires a secure by default configuration and protection against unauthorized access.\n\nCredentials (passwords, API keys, connection strings with embedded passwords) found in configuration files may be exposed through source control, deployment artifacts, or unauthorized file access.\n\n**Recommended actions:**\n* Use a secrets management service (e.g., Azure Key Vault, HashiCorp Vault) to externalize all secrets.\n* Use environment variable references in configuration: `${DB_PASSWORD}` or `${env.DB_PASSWORD}`.\n* Use Spring Cloud Config with encrypted values or Spring Cloud Vault.\n* Ensure configuration files with secrets are excluded from version control (`.gitignore`).",
+      "title": "CRA: Hard-coded credentials in configuration files",
+      "severity": "mandatory",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+          "title": "EU Cyber Resilience Act - Regulation (EU) 2024/2847"
+        },
+        {
+          "url": "https://cwe.mitre.org/data/definitions/260.html",
+          "title": "CWE-260 - Password in Configuration File"
+        }
+      ],
+      "labels": [
+        "source",
+        "domain=cloud-readiness",
+        "category=hardcoded-credential",
+        "security",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "cra-hardcoded-credential-default-pwd-04000": {
+      "id": "cra-hardcoded-credential-default-pwd-04000",
+      "description": "**EU Cyber Resilience Act (Annex I, Part I, Section 2(b))** requires a **secure by default configuration**. The use of default, well-known, or trivial passwords violates the secure-by-default principle.\n\nETSI EN 303 645 (referenced standard for CRA compliance) explicitly prohibits universal default passwords in Provision 5.1-1.\n\n**Recommended actions:**\n* Remove all default/well-known passwords from code and configuration.\n* Require unique, strong passwords during initial setup.\n* Use generated secrets that are unique per deployment.\n* Implement password complexity requirements.",
+      "title": "CRA: Default or well-known password detected",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+          "title": "EU Cyber Resilience Act - Regulation (EU) 2024/2847"
+        },
+        {
+          "url": "https://www.etsi.org/deliver/etsi_en/303600_303699/303645/02.01.01_60/en_303645v020101p.pdf",
+          "title": "ETSI EN 303 645 - No Universal Default Passwords"
+        }
+      ],
+      "labels": [
+        "source",
+        "domain=cloud-readiness",
+        "category=hardcoded-credential",
+        "security",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "cra-hardcoded-credential-password-01000": {
+      "id": "cra-hardcoded-credential-password-01000",
+      "description": "**EU Cyber Resilience Act (Annex I, Part I, Section 2(b))** requires products to be delivered with a **secure by default configuration** and to protect against unauthorized access using appropriate authentication mechanisms.\n\nHard-coded passwords in source code are a critical security vulnerability. They cannot be easily changed, may be exposed through version control systems, and violate the principle of secure by default.\n\n**Recommended actions:**\n* Move all credentials to a secure secrets management system (e.g., Azure Key Vault, HashiCorp Vault).\n* Use environment variables or externalized configuration for sensitive values.\n* Use connection pooling with credential providers instead of static credentials.\n* For development, use `.env` files that are excluded from version control.",
+      "title": "CRA: Hard-coded password in Java source code",
+      "severity": "mandatory",
+      "effort": 8,
+      "links": [
+        {
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+          "title": "EU Cyber Resilience Act - Regulation (EU) 2024/2847"
+        },
+        {
+          "url": "https://cwe.mitre.org/data/definitions/798.html",
+          "title": "CWE-798 - Use of Hard-coded Credentials"
+        },
+        {
+          "url": "https://owasp.org/www-community/vulnerabilities/Use_of_hard-coded_password",
+          "title": "OWASP - Hard-coded Credentials"
+        }
+      ],
+      "labels": [
+        "source",
+        "domain=cloud-readiness",
+        "category=hardcoded-credential",
+        "security",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "cra-insecure-random-01000": {
+      "id": "cra-insecure-random-01000",
+      "description": "**EU Cyber Resilience Act (Annex I, Part I, Section 2(c))** requires the use of **state of the art** cryptographic mechanisms, which includes the use of cryptographically secure random number generators (CSPRNG).\n\n`java.util.Random` uses a linear congruential generator (LCG) which is **not cryptographically secure**. Its output is predictable given enough observations, making it unsuitable for:\n- Token/session ID generation\n- Nonce/IV generation for encryption\n- Salt generation for password hashing\n- Any security-sensitive random value generation\n\n**Recommended actions:**\n* Replace `new Random()` with `new SecureRandom()` for any security-relevant random number generation.\n* Replace `Math.random()` with `SecureRandom.nextDouble()` for security use cases.\n* Replace `ThreadLocalRandom.current()` with `SecureRandom` for security contexts.\n* Use `java.security.SecureRandom` which provides a CSPRNG backed by the OS entropy source.",
+      "title": "CRA: Use of insecure random number generator java.util.Random",
+      "severity": "mandatory",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+          "title": "EU Cyber Resilience Act - Regulation (EU) 2024/2847"
+        },
+        {
+          "url": "https://cwe.mitre.org/data/definitions/330.html",
+          "title": "CWE-330 - Use of Insufficiently Random Values"
+        }
+      ],
+      "labels": [
+        "source",
+        "domain=cloud-readiness",
+        "category=insecure-random",
+        "security",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "cra-weak-crypto-md5-01000": {
+      "id": "cra-weak-crypto-md5-01000",
+      "description": "**EU Cyber Resilience Act (Annex I, Part I, Section 2(c))** requires that products protect the confidentiality and integrity of data using encryption and hashing mechanisms that reflect the **state of the art**.\n\n**MD5** is a cryptographically broken hash algorithm. It is vulnerable to collision attacks and must not be used for:\n- Password hashing\n- Digital signatures\n- Data integrity verification\n- Certificate validation\n\n**Recommended actions:**\n* Replace `MessageDigest.getInstance(\"MD5\")` with `MessageDigest.getInstance(\"SHA-256\")` or `MessageDigest.getInstance(\"SHA-3-256\")` for general hashing.\n* For password hashing, use **bcrypt**, **scrypt**, **Argon2**, or **PBKDF2** instead.\n* For HMAC operations, use `HmacSHA256` or `HmacSHA3-256`.",
+      "title": "CRA: Use of weak hash algorithm MD5",
+      "severity": "mandatory",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+          "title": "EU Cyber Resilience Act - Regulation (EU) 2024/2847"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html",
+          "title": "Java Security Standard Algorithm Names"
+        }
+      ],
+      "labels": [
+        "source",
+        "domain=cloud-readiness",
+        "category=weak-cryptography",
+        "security",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "hardcoded-ip-address": {
+      "id": "hardcoded-ip-address",
+      "description": "When migrating environments, hard-coded IP addresses may need to be modified or eliminated.",
+      "title": "Hardcoded IP Address",
+      "severity": "mandatory",
+      "effort": 3,
+      "labels": [
+        "source",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "domain=cloud-readiness",
+        "category=remote-communication",
+        "containerization",
+        "os=windows",
+        "os=linux",
+        "discovery"
+      ]
+    },
+    "hardcoded-urls-00001": {
+      "id": "hardcoded-urls-00001",
+      "description": "This patterns verifies in source code and configuration files the presence of hardcoded URLs using the HTTP protocol (HTTP/HTTPS). This URL would need to be replaced by the new resource's URL during the Cloud migration, if any change occured.",
+      "title": "Avoid using hardcoded URLs (HTTP protocol) in source code",
+      "severity": "optional",
+      "effort": 3,
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "source",
+        "domain=cloud-readiness",
+        "category=remote-communication",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "java-11-deprecate-javaee-00001": {
+      "id": "java-11-deprecate-javaee-00001",
+      "description": "Add the `jakarta.annotation` dependency to your application. E.g. update maven `pom.xml`.\n\n `<groupId>jakarta.annotation</groupId>`\n\n `<artifactId>jakarta.annotation-api</artifactId>`",
+      "title": "The java.annotation (Common Annotations) module has been removed from OpenJDK 11",
+      "severity": "mandatory",
+      "effort": 2,
+      "links": [
+        {
+          "url": "https://www.oracle.com/java/technologies/javase/11-relnote-issues.html#JDK-8190378",
+          "title": "Removed Java EE modules"
+        }
+      ],
+      "labels": [
+        "source=openjdk11-",
+        "source=openjdk",
+        "capability=openjdk11+",
+        "capability=openjdk",
+        "domain=java-upgrade",
+        "category=deprecated-apis",
+        "os=windows",
+        "os=linux",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps"
+      ]
+    },
+    "java-18-deprecate-runtime-00000": {
+      "id": "java-18-deprecate-runtime-00000",
+      "description": "This method is error-prone and should not be used, the corresponding method `ProcessBuilder` should be used instead. \nThe command string is broken into tokens using only whitespace characters. For an argument with an embedded space, such as a filename, this can cause problems as the token does not include the full filename.",
+      "title": "The Runtime.exec(String, ...) method is error-prone and should not be used",
+      "severity": "mandatory",
+      "effort": 2,
+      "links": [
+        {
+          "url": "https://cr.openjdk.org/~iris/se/18/latestSpec/api/deprecated-list.html",
+          "title": "The Runtime.exec(String, ...) method is error-prone and should not be used"
+        }
+      ],
+      "labels": [
+        "source=openjdk18-",
+        "source=openjdk",
+        "capability=openjdk18+",
+        "capability=openjdk",
+        "domain=java-upgrade",
+        "category=deprecated-apis",
+        "os=windows",
+        "os=linux",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps"
+      ]
+    },
+    "java-20-deprecate-net-00000": {
+      "id": "java-20-deprecate-net-00000",
+      "description": "The `java.net.URL` constructors are deprecated in JDK 20 release.\n\nDevelopers are encouraged to use `java.net.URI` to parse or construct a URL. In cases where an instance of `java.net.URL` is needed to open a connection, `java.net.URI` can be used to construct or parse the URL string, possibly calling `URI::parseServerAuthority()` to validate that the authority component can be parsed as a server-based authority, and then `calling URI::toURL()` to create the URL instance.\n\nA new method, `URL::of(URI, URLStreamHandler)` is provided for the advanced usages where there is a need to construct a URL with a given custom stream handler.",
+      "title": "java.net.URL Constructors Are Deprecated",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://www.oracle.com/java/technologies/javase/20-relnote-issues.html#JDK-8294241",
+          "title": "java.net.URL Constructors Are Deprecated"
+        }
+      ],
+      "labels": [
+        "source=openjdk20-",
+        "source=openjdk",
+        "capability=openjdk20+",
+        "capability=openjdk",
+        "domain=java-upgrade",
+        "category=deprecated-apis",
+        "os=windows",
+        "os=linux",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps"
+      ]
+    },
+    "jni-native-code-00001": {
+      "id": "jni-native-code-00001",
+      "description": "When migrating an application that uses native processes to Azure, it's important to consider that native processes might not run in a cloud or container environment. Instead, you can refactor your application to use cloud-compatible alternatives or managed services.\n\n * **Identify native process dependencies**: Review all native processes used in your application and understand the purpose of each process.\n\n * **Evaluate and use cloud-compatible alternatives**: For each native process, look for alternative libraries, services, or APIs that provide similar functionality and are compatible with cloud environments. Replace instances of native process usage with the chosen cloud-compatible alternatives.\n\n * **Leverage Azure managed services**: Evaluate the use of Azure-managed services to replace certain native process functionalities.\n\n * **Test and validate**: Thoroughly test the updated application to ensure it works correctly with the new libraries or services. Perform functional, performance, and stress tests to validate that the application meets its requirements and can handle the expected workload.",
+      "title": "Java Native Processes",
+      "severity": "mandatory",
+      "effort": 8,
+      "links": [
+        {
+          "url": "https://docs.microsoft.com/en-us/visualstudio/install/advanced-build-tools-container?view=vs-2019",
+          "title": "Advanced example for containers"
+        },
+        {
+          "url": "https://stackoverflow.com/questions/54502335/how-to-register-com-components-inside-docker-as-regsvr32-command-executes-succes",
+          "title": "how to register com components inside docker as regsvr32 command"
+        },
+        {
+          "url": "https://github.com/dotnet-architecture/eShopModernizing/wiki/02.-How-to-containerize-the-.NET-Framework-web-apps-with-Windows-Containers-and-Docker",
+          "title": "How to containerize the .NET Framework web apps with Windows Containers and Docker"
+        },
+        {
+          "url": "https://forums.docker.com/t/windows-application-32-bit-com-dll-registration/47205/8",
+          "title": "Windows Application 32 bit COM dll registration"
+        }
+      ],
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=java-native-code",
+        "jni",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "local-storage-00001": {
+      "id": "local-storage-00001",
+      "description": "When migrating an application that relies on the file system to Azure, it's important to consider the limitations of local storage in a cloud environment.\n An application running inside a container could lose access to a file in local storage.\n\n The following recommendations depend on the function of the file in local storage:\n * Determine the **storage needs** for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.\n \n * If persistent storage is needed, consider **mounting Azure File Share** or **using Azure Blob Storage**. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.\n\n * **Logging**: Log to standard output and use Azure Monitor to collect and analyze the logs.\n\n * **Caching**: Use Azure Cache for Redis as a cache backing service.\n\n * **Configuration**: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.",
+      "title": "File system - Java IO",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/storage",
+          "title": "Azure Storage documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/container-apps/storage-mounts-azure-files",
+          "title": "Create an Azure Files volume mount in Azure Container Apps"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/container-apps/storage-mounts",
+          "title": "Use storage mounts in Azure Container Apps"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs",
+          "title": "Azure Monitor Logs overview"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-cache-for-redis",
+          "title": "Azure Cache for Redis documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-app-configuration",
+          "title": "Azure App Configuration documentation"
+        }
+      ],
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=file-system-management",
+        "storage",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "local-storage-00002": {
+      "id": "local-storage-00002",
+      "description": "When migrating an application that relies on the file system to Azure, it's important to consider the limitations of local storage in a cloud environment.\n An application running inside a container could lose access to a file in local storage.\n\n The following recommendations depend on the function of the file in local storage:\n\n * Determine the storage needs for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.\n \n * If persistent storage is needed, consider using Azure File Share or Azure Blob Storage. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.\n\n * **Logging**: Log to standard output and use Azure Monitor to collect and analyze the logs.\n\n * **Caching**: Use Azure Cache for Redis as a cache backing service.\n\n * **Configuration**: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.",
+      "title": "File system - java.net.URL/URI",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/storage",
+          "title": "Azure Storage documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/container-apps/storage-mounts-azure-files",
+          "title": "Create an Azure Files volume mount in Azure Container Apps"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/container-apps/storage-mounts",
+          "title": "Use storage mounts in Azure Container Apps"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs",
+          "title": "Azure Monitor Logs overview"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-cache-for-redis",
+          "title": "Azure Cache for Redis documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-app-configuration",
+          "title": "Azure App Configuration documentation"
+        }
+      ],
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=file-system-management",
+        "storage",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "local-storage-00005": {
+      "id": "local-storage-00005",
+      "description": "When migrating an application that relies on the file system to Azure, it's important to consider the limitations of local storage in a cloud environment.\n An application running inside a container could lose access to a file in local storage.\n\n The following recommendations depend on the function of the file in local storage:\n\n * Determine the **storage needs** for your application: Ephemeral storage or persistent storage. Ephemeral storage only persists until the cloud environment is restarted. Persistent storage is required for data that needs to persist across restarts.\n \n * If persistent storage is needed, consider **mounting Azure File Share** or **using Azure Blob Storage**. Mount Azure file share allows your application to access files via the mount location. Azure blob storage is a scalable object store for data objects, such as text or binary files.\n\n * **Logging**: Log to standard output and use Azure Monitor to collect and analyze the logs.\n\n * **Caching**: Use Azure Cache for Redis as a cache backing service.\n\n * **Configuration**: Store configuration in Azure App Configuration instead of using the file system. Also store configuration settings in environment variables so that they can be updated without code changes.",
+      "title": "File system - Java NIO",
+      "severity": "mandatory",
+      "effort": 3,
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=file-system-management",
+        "storage",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "localhost-00004": {
+      "id": "localhost-00004",
+      "description": "The app is trying to use localhost, please try to migrate the resource to cloud",
+      "title": "Localhost Usage",
+      "severity": "optional",
+      "effort": 3,
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=local-resource-access",
+        "localhost",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "localhost-jdbc-00002": {
+      "id": "localhost-jdbc-00002",
+      "description": "The app is trying to access local resource by JDBC, please try to migrate the resource to cloud",
+      "title": "Local JDBC Calls",
+      "severity": "mandatory",
+      "effort": 5,
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=local-resource-access",
+        "localhost",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "logging-0002": {
+      "id": "logging-0002",
+      "description": "Detected a logging configuration that writes logs to the local file system. In Azure environments, file-based appenders are discouraged due to ephemeral storage and lack of centralized access.\n\nRecommendations:\n* Switch to console appenders only (Logback / Log4j) and disable file or rolling file appenders.\n* Collect logs using Azure Monitor Logs (workspace-based Application Insights) via diagnostic settings.\n* Output structured JSON logs to improve KQL querying and cross-service correlation.",
+      "title": "Avoid File System Logging in Configuration",
+      "severity": "mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs",
+          "title": "Azure Monitor Logs overview"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/logs/log-query-overview",
+          "title": "Log queries in Azure Monitor"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs",
+          "title": "Enable diagnostics logging for apps in Azure App Service"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-tutorial",
+          "title": "Log Analytics tutorial"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/app/create-workspace-resource",
+          "title": "Workspace-based Application Insights"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings",
+          "title": "Diagnostic settings"
+        }
+      ],
+      "labels": [
+        "source",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "domain=cloud-readiness",
+        "category=logging-management",
+        "logging",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "mail-00000": {
+      "id": "mail-00000",
+      "description": "The application uses email APIs to send or receive emails.\n In a cloud environment, mail systems should be considered backing services and treated like attached resources.\n You can either use SMTP directly, or use Azure Communication Services Email and migrate the email functionality of your application to Azure.\n\n * Using **Azure Communication Services**: Create an Azure Communication Services resource in your Azure subscription. This will provide you with the necessary capabilities to send emails. Update your application's email sending code to use the Azure Communication Services Email SDK or REST API. This involves integrating the Azure Communication Services Email client libraries into your application and configuring the required settings, such as the sender's email address, recipient addresses, subject, and email content.\n\n * Using **SMTP directly**: You can also use your own SMTP provider. In this case, check if port 25 is open in the App Service SKU.",
+      "title": "Java Mail API",
+      "severity": "potential",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/communication-services",
+          "title": "Azure Communication Services documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/communication-services/quickstarts/email/send-email",
+          "title": "Quickstart: How to send an email using Azure Communication Service"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/virtual-network/troubleshoot-outbound-smtp-connectivity",
+          "title": "Troubleshoot outbound SMTP connectivity problems in Azure"
+        }
+      ],
+      "labels": [
+        "source=java",
+        "source=java-ee",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "domain=cloud-readiness",
+        "category=remote-communication",
+        "mail",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "session-00001": {
+      "id": "session-00001",
+      "description": "When migrating an application that stores data in an HTTP Session to Azure, it's important to consider that the HTTP Session is not a suitable mechanism for maintaining state in a cloud environment due to scaling in and out as load changes.\n Instead, you can leverage Azure Cache for Redis to achieve session management in a cloud-native way.\n\n * Provide **Azure Cache for Redis**: Azure Cache for Redis is a fully managed, highly scalable, and distributed caching service. It allows you to store and manage session data in-memory, providing fast and efficient access.\n\n * **Configure** Azure Cache for Redis: Configure the cache settings, such as cache size, eviction policies, and access control.\n\n * **Update session management**: Modify your application's session management code to use Azure Cache for Redis. Replace the usage of HTTP Session objects with the appropriate Redis-based session management implementation.\n\n * **Store and retrieve session data**: Use the Azure Cache for Redis client libraries or connectors within your application to store and retrieve session data. This ensures that session state is securely managed and accessible across multiple instances of your application.\n\n * **Test and validate**: Test your application to ensure that session state is maintained correctly using Azure Cache for Redis. Verify that session data is stored and retrieved accurately across multiple instances of your application.",
+      "title": "HTTP Session data storage",
+      "severity": "potential",
+      "effort": 5,
+      "links": [
+        {
+          "url": "https://learn.microsoft.com/azure/azure-cache-for-redis",
+          "title": "Azure Cache for Redis Documentation"
+        },
+        {
+          "url": "https://learn.microsoft.com/azure/azure-cache-for-redis/cache-java-get-started",
+          "title": "Quickstart: Use Azure Cache for Redis in Java"
+        }
+      ],
+      "labels": [
+        "source=java",
+        "source=java-ee",
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "domain=cloud-readiness",
+        "category=session-management",
+        "clustering",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "unsecure-network-protocol-00000": {
+      "id": "unsecure-network-protocol-00000",
+      "description": "Using secured protocols such as HTTPS and SFTP (over HTTP and FTP) should now be the norm as applications are more and more exposed and interconnected. \nThis CloudReady patterns looks for unescured URI in the source code or deprecated URI libraries. \nIdeally, URLs should be replaced in your source code by secured protocols HTTPS and SFTP (and ensure the infrastructure implements these protocols for the resources your application calls, uses or references).",
+      "title": "Use of unsecured network protocols or URI libraries",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https",
+          "title": "Why HTTPS matters"
+        },
+        {
+          "url": "https://www.ssh.com/ssh/sftp/",
+          "title": "SSH File Transfer Protocol (SFTP): Get SFTP client & server"
+        }
+      ],
+      "labels": [
+        "target=azure-aks",
+        "target=azure-container-apps",
+        "target=azure-appservice",
+        "capability=containerization",
+        "source",
+        "domain=cloud-readiness",
+        "category=remote-communication",
+        "containerization",
+        "os=windows",
+        "os=linux"
+      ]
+    },
+    "utf-8-by-default-00000": {
+      "id": "utf-8-by-default-00000",
+      "description": "If not supplied, the `java.io.{{className}}` constructor uses UTF-8 by default. \n If you haven't provided the character set, and UTF-8 is not appropriate for your class, then supply the appropriate character set to the constructor call.",
+      "title": "The 'java.io' constructor defaults to UTF-8",
+      "severity": "potential",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://openjdk.org/jeps/400",
+          "title": "JEP 400: UTF-8 by Default"
+        }
+      ],
+      "labels": [
+        "capability=openjdk18+",
+        "capability=openjdk",
+        "source",
+        "domain=cloud-readiness",
+        "category=default-encoding",
+        "os=windows",
+        "os=linux",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps"
+      ]
+    },
+    "utf-8-by-default-00020": {
+      "id": "utf-8-by-default-00020",
+      "description": "If not supplied, the `java.net.URLEncoder.encode` method uses UTF-8 by default. \n If you haven't provided the character set, and UTF-8 is not appropriate for your class, then then supply the appropriate character set to the method call.",
+      "title": "The java.net.URLEncoder.encode method uses UTF-8 by default",
+      "severity": "potential",
+      "effort": 3,
+      "links": [
+        {
+          "url": "https://openjdk.org/jeps/400",
+          "title": "JEP 400: UTF-8 by Default"
+        }
+      ],
+      "labels": [
+        "capability=openjdk18+",
+        "capability=openjdk",
+        "source",
+        "domain=cloud-readiness",
+        "category=default-encoding",
+        "os=windows",
+        "os=linux",
+        "target=azure-appservice",
+        "target=azure-aks",
+        "target=azure-container-apps"
+      ]
+    }
+  }
+}
